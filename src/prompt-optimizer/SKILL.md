@@ -2,7 +2,7 @@
 name: prompt-optimizer
 description: Transforms vague or simple user prompts into high-quality, structured, and high-performance AI instructions using systematic optimization techniques like XML tagging, few-shot examples, and Chain-of-Thought. Use this skill when you need to improve the reliability, accuracy, or formatting of an AI's output.
 metadata:
-  author: Manus
+  author: Yukiniro
   version: "1.0"
   category: Efficiency
 ---

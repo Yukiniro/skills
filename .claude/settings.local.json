@@ -8,7 +8,11 @@
       "Bash(PYTHONIOENCODING=utf-8 python \"C:/Users/FJKJ/.agents/skills/skill-creator/scripts/init_skill.py\" resume-to-web --path \"e:/GitHub/skills/src\")",
       "Bash(PYTHONIOENCODING=utf-8 python \"C:/Users/FJKJ/.agents/skills/skill-creator/scripts/quick_validate.py\" \"e:/GitHub/skills/src/resume-to-web\")",
       "Bash(pip install pyyaml)",
-      "Bash(python -c \":*)"
+      "Bash(python -c \":*)",
+      "Bash(python \"C:/Users/FJKJ/.claude/skills/skill-creator/scripts/init_skill.py\" resume-screener --path \"e:/GitHub/skills/src\")",
+      "Bash(PYTHONIOENCODING=utf-8 python \"C:/Users/FJKJ/.claude/skills/skill-creator/scripts/init_skill.py\" resume-screener --path \"e:/GitHub/skills/src\")",
+      "Bash(PYTHONIOENCODING=utf-8 python \"C:/Users/FJKJ/.claude/skills/skill-creator/scripts/package_skill.py\" \"e:/GitHub/skills/src/resume-screener\")",
+      "Bash(PYTHONUTF8=1 python \"C:/Users/FJKJ/.claude/skills/skill-creator/scripts/package_skill.py\" \"e:/GitHub/skills/src/resume-screener\")"
     ]
   }
 }

@@ -1,0 +1,24 @@
+{
+  "name": "yukiniro-skills",
+  "owner": {
+    "name": "Yukiniro"
+  },
+  "metadata": {
+    "description": "AI Agent Skills for development efficiency",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "all-skills",
+      "description": "Project setup, prompt optimization, resume tools",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/project-setup",
+        "./skills/prompt-optimizer",
+        "./skills/frontend-resume",
+        "./skills/resume-screener"
+      ]
+    }
+  ]
+}

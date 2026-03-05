@@ -1,128 +1,180 @@
 # AI Agent Skills Collection
 
-一组精心设计的 AI Agent Skills，提升 AI 编程助手（Cursor、Claude Code 等）的工作效率和代码质量。
+A curated set of AI Agent Skills to boost productivity and code quality for AI coding assistants (Cursor, Claude Code, etc.).
 
-## 包含的 Skills
+## Included Skills
 
 ### Project Setup
 
-为新项目快速配置开发工具链、代码规范和 AI agent skills。自动探测项目环境并适配宿主项目的包管理器、框架和已有工具链。
+Quickly configure development toolchains, code standards, and AI agent skills for new projects. Automatically detects the project environment and adapts to the host project's package manager, framework, and existing toolchain.
 
-- 智能环境探测（包管理器、项目类型、TypeScript）
-- 自动生成 AGENTS.md 项目规范文档
-- 配置 Prettier 代码格式化与 Vitest 测试框架
-- 安装常用 AI Agent Skills（Vercel React、Frontend Design、shadcn/ui、Vitest）
-- 为 Next.js 项目配置 next-intl 国际化
+- Smart environment detection (package manager, project type, TypeScript)
+- Auto-generate AGENTS.md project conventions document
+- Configure Prettier code formatting and Vitest test framework
+- Install popular AI Agent Skills (Vercel React, Frontend Design, shadcn/ui, Vitest)
+- Configure next-intl internationalization for Next.js projects
 
-[详细文档 →](src/project-setup/SKILL.md)
+[Documentation →](skills/project-setup/SKILL.md)
 
 ### Prompt Optimizer
 
-将模糊或简单的用户提示词转换为高质量、结构化的 AI 指令。使用 XML 标签、Few-shot 示例和 Chain-of-Thought 等系统化优化技术。
+Transform vague or simple user prompts into high-quality, structured AI instructions. Uses systematic optimization techniques like XML tagging, few-shot examples, and Chain-of-Thought.
 
-- 基于"AI 作为新员工"理念的系统化提示词优化
-- 结构化提示词构建（role、context、task、requirements、output_format）
-- 提升 AI 输出的可靠性、准确性和格式一致性
+- Systematic prompt optimization based on the "AI as a New Employee" philosophy
+- Structured prompt construction (role, context, task, requirements, output_format)
+- Improve reliability, accuracy, and format consistency of AI outputs
 
-[详细文档 →](src/prompt-optimizer/SKILL.md)
+[Documentation →](skills/prompt-optimizer/SKILL.md)
 
-### Resume to Web
+### Frontend Resume
 
-将 PDF 简历转换为零依赖、动画丰富的交互式单页 HTML 简历网站。通过视觉探索帮助用户发现自己偏好的美学风格。
+Convert PDF resumes into zero-dependency, animation-rich interactive single-page HTML resume websites. Help users discover their preferred aesthetic through visual exploration.
 
-- 零依赖单文件输出（内联 CSS/JS，无需构建工具）
-- 10 种独特风格预设（Midnight Architect、Neon Terminal、Clean Slate 等）
-- 滚动触发动画、浮动导航、交互式技能条
-- 响应式布局、打印友好、WCAG AA 无障碍支持
+- Zero-dependency single-file output (inline CSS/JS, no build tools)
+- 10 distinctive style presets (Midnight Architect, Neon Terminal, Clean Slate, etc.)
+- Scroll-triggered animations, floating navigation, interactive skill bars
+- Responsive layout, print-friendly, WCAG AA accessibility support
 
-[详细文档 →](src/resume-to-web/SKILL.md)
+[Documentation →](skills/frontend-resume/SKILL.md)
 
 ### Resume Screener
 
-基于岗位要求对简历进行系统化评估，采用 10 级评分体系（C → SSS）和 9 维度多角度打分，输出证据驱动的评估报告与录用建议。
+Systematically evaluate resumes against job requirements using a 10-level grading system (C → SSS) with 9-dimension multi-angle scoring, producing evidence-driven evaluation reports and hiring recommendations.
 
-- 9 维度评估（教育背景、工作经验、技术技能、项目经验等）
-- 支持中英文简历，理解 985/211、BAT/FAANG 等体系
-- 硬性要求自动检测与评级封顶机制
-- 结构化输出：总评、维度明细、优劣势分析、面试建议
+- 9-dimension evaluation (education, work experience, technical skills, project experience, etc.)
+- Supports Chinese and English resumes, understands 985/211, BAT/FAANG systems
+- Hard requirement detection with grade capping mechanism
+- Structured output: overall rating, dimension details, strengths/weaknesses analysis, interview suggestions
 
-[详细文档 →](src/resume-screener/SKILL.md)
+[Documentation →](skills/resume-screener/SKILL.md)
 
-## 快速开始
+## Getting Started
 
-### 安装
+### Claude Code
+
+Install via the Plugin marketplace:
 
 ```bash
-# 通过 npx skills 安装到项目（推荐）
-npx skills add <your-github-username>/skills \
-  --skill project-setup prompt-optimizer resume-to-web resume-screener \
-  --agent cursor claude-code agents -y
-
-# 或克隆到本地
-git clone https://github.com/<your-github-username>/skills.git ~/.cursor/skills-custom
+/plugin marketplace add Yukiniro/skills
 ```
 
-### 使用
+Then select `Browse and install plugins` → `yukiniro-skills` → `all-skills` → `Install now`
 
-在 Cursor、Claude Code 或其他支持 Agent Skills 的 AI 编程助手中：
+Or install directly:
 
-| Skill            | 示例指令                                               |
-| ---------------- | ------------------------------------------------------ |
-| Project Setup    | "使用 project-setup skill 初始化项目"                  |
-| Prompt Optimizer | "使用 prompt-optimizer skill 优化这个提示词：[提示词]" |
-| Resume to Web    | "把这份 PDF 简历转成交互式网页"                        |
-| Resume Screener  | "用这个 JD 评估这份简历"                               |
+```bash
+/plugin install all-skills@yukiniro-skills
+```
 
-## 项目结构
+### Cursor
+
+Clone to a local skills directory:
+
+```bash
+git clone https://github.com/Yukiniro/skills.git ~/.cursor/skills-custom
+```
+
+### npx skills CLI
+
+```bash
+npx skills add Yukiniro/skills \
+  --skill project-setup prompt-optimizer frontend-resume resume-screener \
+  --agent cursor claude-code agents -y
+```
+
+### Usage
+
+In Cursor, Claude Code, or any AI coding assistant that supports Agent Skills:
+
+| Skill            | Example Prompt                                              |
+| ---------------- | ----------------------------------------------------------- |
+| Project Setup    | "Use the project-setup skill to initialize my project"      |
+| Prompt Optimizer | "Use the prompt-optimizer skill to optimize this prompt: …" |
+| Frontend Resume  | "Convert this PDF resume into an interactive web page"      |
+| Resume Screener  | "Evaluate this resume against this job description"         |
+
+## Creating Custom Skills
+
+Use [template/SKILL.md](template/SKILL.md) as a starting template:
+
+```markdown
+---
+name: my-skill-name
+description: A clear description of what this skill does and when to use it.
+---
+
+# My Skill Name
+
+[Add your instructions here]
+```
+
+The frontmatter requires only two fields:
+
+- `name` — A unique identifier for the skill (lowercase, hyphen-separated)
+- `description` — A clear description of what the skill does and when to use it
+
+For more information, see [How to create custom skills](https://support.claude.com/en/articles/12512198-creating-custom-skills).
+
+## Project Structure
 
 ```
 skills/
-├── README.md
-├── src/
-│   ├── project-setup/           # 项目设置
+├── .claude-plugin/
+│   └── marketplace.json        # Claude Code Plugin marketplace config
+├── skills/
+│   ├── project-setup/          # Project setup
 │   │   ├── SKILL.md
+│   │   ├── LICENSE.txt
 │   │   └── templates/
 │   │       ├── AGENTS.md
 │   │       ├── prettier.config.md
 │   │       ├── vitest.config.md
 │   │       └── next-intl.config.md
-│   ├── prompt-optimizer/        # 提示词优化
+│   ├── prompt-optimizer/       # Prompt optimization
 │   │   ├── SKILL.md
+│   │   ├── LICENSE.txt
 │   │   └── references/
 │   │       └── GUIDE.md
-│   ├── resume-to-web/           # 简历转网页
+│   ├── frontend-resume/         # Frontend resume
 │   │   ├── SKILL.md
+│   │   ├── LICENSE.txt
 │   │   ├── scripts/
 │   │   │   └── extract_pdf.py
 │   │   └── references/
 │   │       ├── HTML_ARCHITECTURE.md
 │   │       ├── STYLE_PRESETS.md
 │   │       └── RESUME_COMPONENTS.md
-│   └── resume-screener/         # 简历筛选评估
+│   └── resume-screener/        # Resume screening & evaluation
 │       ├── SKILL.md
+│       ├── LICENSE.txt
 │       └── references/
 │           ├── EVALUATION_DIMENSIONS.md
 │           ├── GRADING_RUBRIC.md
 │           └── OUTPUT_FORMAT.md
-└── .gitignore
+├── template/
+│   └── SKILL.md                # New skill creation template
+├── .gitignore
+├── LICENSE
+└── README.md
 ```
 
-## 贡献
+## Contributing
 
-欢迎提交 Issue 和 Pull Request。
+Issues and Pull Requests are welcome.
 
-1. Fork 本仓库
-2. 创建特性分支 (`git checkout -b feature/amazing-skill`)
-3. 提交更改 (`git commit -m 'Add some amazing skill'`)
-4. 推送到分支 (`git push origin feature/amazing-skill`)
-5. 开启 Pull Request
+1. Fork this repository
+2. Create a feature branch (`git checkout -b feature/amazing-skill`)
+3. Commit your changes (`git commit -m 'Add some amazing skill'`)
+4. Push to the branch (`git push origin feature/amazing-skill`)
+5. Open a Pull Request
 
-## 许可证
+## License
 
 MIT License
 
-## 相关资源
+## Resources
 
-- [Cursor AI](https://cursor.sh/) - AI-first 代码编辑器
-- [Claude Code](https://www.anthropic.com/) - Anthropic 的 AI 编程助手
-- [npx skills CLI](https://www.npmjs.com/package/skills) - Skills 安装工具
+- [Agent Skills Spec](https://agentskills.io/) - The Agent Skills standard specification
+- [Cursor AI](https://cursor.sh/) - AI-first code editor
+- [Claude Code](https://www.anthropic.com/) - Anthropic's AI coding assistant
+- [npx skills CLI](https://www.npmjs.com/package/skills) - Skills installation tool

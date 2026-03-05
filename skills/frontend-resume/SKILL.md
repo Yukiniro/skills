@@ -1,9 +1,9 @@
 ---
-name: resume-to-web
-description: Convert PDF resumes into interactive, animated single-page HTML resume websites with distinctive visual styles. Use when the user wants to create a web resume, convert a PDF resume to HTML, build an interactive CV page, or generate a personal resume website. Helps non-designers discover their aesthetic through visual exploration ("show, don't tell"). Supports PDF input, text input, and enhancement of existing HTML resumes.
+name: frontend-resume
+description: Convert resumes into interactive, animated single-page HTML resume websites with distinctive visual styles. Use when the user wants to create a web resume, convert a resume to HTML, build an interactive CV page, or generate a personal resume website. Helps non-designers discover their aesthetic through visual exploration ("show, don't tell"). Supports PDF, DOCX, Markdown, plain text, JSON Resume (jsonresume.org), direct text input, and enhancement of existing HTML resumes.
 ---
 
-# Resume to Web
+# Frontend Resume
 
 Create zero-dependency, animation-rich HTML resume pages that run entirely in the browser. Help users discover their preferred aesthetic through visual exploration, then generate production-quality interactive resumes.
 
@@ -21,7 +21,7 @@ Create zero-dependency, animation-rich HTML resume pages that run entirely in th
 
 Determine what the user wants:
 
-**Mode A: From PDF** — User provides a .pdf resume file → Phase 1
+**Mode A: From File** — User provides a resume file (.pdf, .docx, .md, .txt, .json) → Phase 1
 **Mode B: From Text** — User provides resume content as text → Phase 1
 **Mode C: Enhancement** — User has an existing HTML resume to improve → Read file, then Phase 2
 
@@ -29,24 +29,32 @@ Determine what the user wants:
 
 ## Phase 1: Content Extraction & Structuring
 
-### Step 1.1: PDF Extraction (Mode A only)
+### Step 1.1: File Extraction (Mode A only)
 
-Run `scripts/extract_pdf.py` on the user's PDF:
+Run `scripts/extract_resume.py` on the user's resume file:
 
 ```bash
-python [skill-dir]/scripts/extract_pdf.py <resume.pdf>
+python [skill-dir]/scripts/extract_resume.py <resume_file>
 ```
 
-Requires `pdfplumber` (preferred) or `PyPDF2`. If neither is installed, prompt user to install:
-```bash
-pip install pdfplumber
-```
+**Supported formats and dependencies:**
 
-Present extracted content to user for confirmation.
+| Format      | Extensions | Python Dependency                    | Notes                                                                                          |
+| ----------- | ---------- | ------------------------------------ | ---------------------------------------------------------------------------------------------- |
+| PDF         | .pdf       | `pdfplumber` (preferred) or `PyPDF2` | `pip install pdfplumber`                                                                       |
+| Word        | .docx      | `python-docx`                        | `pip install python-docx`                                                                      |
+| Markdown    | .md        | None                                 | Parses headings, lists, bold/italic                                                            |
+| Plain Text  | .txt       | None                                 | ALL-CAPS lines inferred as headings                                                            |
+| JSON Resume | .json      | None (built-in `json`)               | [jsonresume.org](https://jsonresume.org/schema) schema; already structured — can skip Step 1.2 |
+
+If a required dependency is missing, the script prints install instructions.
+
+Present extracted content to user for confirmation. For JSON Resume files, the data is already structured — present the mapped sections directly and skip to Step 1.3 unless the user wants to adjust.
 
 ### Step 1.2: Structure Content
 
 Parse raw text into structured sections:
+
 - **header**: name, title/tagline, location, contact (email, phone, LinkedIn, GitHub, portfolio)
 - **about**: professional summary
 - **experience[]**: company, role, dates, location, bullets
@@ -61,6 +69,7 @@ Present structured content to user for review. Ask: "Does this look correct? Any
 ### Step 1.3: Section Priority
 
 Ask via AskUserQuestion:
+
 - Header: "Layout"
 - Question: "Which sections should be most prominent?"
 - Options:
@@ -76,35 +85,38 @@ Ask via AskUserQuestion:
 ### Step 2.0: Style Path
 
 Ask: "How would you like to choose your resume style?"
+
 - "Show me options" — Generate 3 visual previews (recommended) → Step 2.1
 - "I know what I want" — Pick from preset list directly → Show preset picker below
 
 **Available Presets:**
 
-| Preset | Vibe | Best For |
-|--------|------|----------|
-| Midnight Architect | Sophisticated, premium | Executives, consultants |
-| Neon Terminal | Hacker-chic, developer | Software engineers, DevOps |
-| Dark Luxe | Elegant, editorial | Creative directors, marketing |
-| Cosmic Depth | Bold, futuristic | Tech founders, AI/ML engineers |
-| Clean Slate | Minimal, Swiss-inspired | Designers, product managers |
-| Paper Craft | Warm, tactile | Writers, educators, academics |
-| Soft Blueprint | Technical, approachable | Engineers, data scientists |
-| Brutalist Mono | Raw, anti-design | Brand strategists, standout seekers |
-| Sage Garden | Nature-inspired, calming | HR, wellness, educators |
-| Retro Ink | Vintage editorial | Journalists, personal brands |
+| Preset             | Vibe                     | Best For                            |
+| ------------------ | ------------------------ | ----------------------------------- |
+| Midnight Architect | Sophisticated, premium   | Executives, consultants             |
+| Neon Terminal      | Hacker-chic, developer   | Software engineers, DevOps          |
+| Dark Luxe          | Elegant, editorial       | Creative directors, marketing       |
+| Cosmic Depth       | Bold, futuristic         | Tech founders, AI/ML engineers      |
+| Clean Slate        | Minimal, Swiss-inspired  | Designers, product managers         |
+| Paper Craft        | Warm, tactile            | Writers, educators, academics       |
+| Soft Blueprint     | Technical, approachable  | Engineers, data scientists          |
+| Brutalist Mono     | Raw, anti-design         | Brand strategists, standout seekers |
+| Sage Garden        | Nature-inspired, calming | HR, wellness, educators             |
+| Retro Ink          | Vintage editorial        | Journalists, personal brands        |
 
 If user picks one directly, skip to Phase 3.
 
 ### Step 2.1: Guided Discovery
 
 **Question 1 — Mood** (multiSelect up to 2):
+
 - "Professional/Authoritative" — Established, trustworthy
 - "Creative/Distinctive" — Unique, design-forward
 - "Modern/Technical" — Clean, developer-oriented
 - "Warm/Approachable" — Friendly, personable
 
 **Question 2 — Tone:**
+
 - "Light" — Clean, printable
 - "Dark" — Bold, screen-optimized
 - "Either" — Let the style decide
@@ -115,14 +127,15 @@ Based on mood + tone, select 3 presets. Read `references/STYLE_PRESETS.md` for f
 
 **Mood-to-preset mapping:**
 
-| Mood | Dark | Light | Specialty |
-|------|------|-------|-----------|
-| Professional | Midnight Architect, Dark Luxe | Clean Slate, Soft Blueprint | — |
-| Creative | Dark Luxe, Cosmic Depth | Paper Craft | Brutalist Mono, Retro Ink |
-| Modern/Technical | Neon Terminal, Cosmic Depth | Soft Blueprint | Brutalist Mono |
-| Warm | Dark Luxe | Paper Craft, Sage Garden | Retro Ink |
+| Mood             | Dark                          | Light                       | Specialty                 |
+| ---------------- | ----------------------------- | --------------------------- | ------------------------- |
+| Professional     | Midnight Architect, Dark Luxe | Clean Slate, Soft Blueprint | —                         |
+| Creative         | Dark Luxe, Cosmic Depth       | Paper Craft                 | Brutalist Mono, Retro Ink |
+| Modern/Technical | Neon Terminal, Cosmic Depth   | Soft Blueprint              | Brutalist Mono            |
+| Warm             | Dark Luxe                     | Paper Craft, Sage Garden    | Retro Ink                 |
 
 Generate 3 mini HTML previews in `.claude-design/resume-previews/`:
+
 ```
 .claude-design/resume-previews/
 ├── style-a.html
@@ -133,6 +146,7 @@ Generate 3 mini HTML previews in `.claude-design/resume-previews/`:
 Each preview: self-contained (~80-120 lines), shows hero section + one experience entry + skill bars. Enough to convey the aesthetic.
 
 **NEVER use these generic patterns:**
+
 - Inter, Roboto, Arial as display fonts
 - Purple gradients on white, generic indigo `#6366f1`
 - Everything centered with no variation
@@ -147,6 +161,7 @@ Present previews, ask user to pick one or mix elements.
 ## Phase 3: Generate Resume
 
 Read these reference files for the chosen preset:
+
 - **`references/STYLE_PRESETS.md`** — Full CSS variables, font URLs, color palette, animation style
 - **`references/RESUME_COMPONENTS.md`** — Interactive component CSS/JS patterns
 - **`references/HTML_ARCHITECTURE.md`** — Base HTML template, mandatory CSS, JS architecture, print styles, accessibility checklist
@@ -154,6 +169,7 @@ Read these reference files for the chosen preset:
 ### Output
 
 Generate a single self-contained HTML file:
+
 - All CSS inline in `<style>`
 - All JS inline in `<script>`
 - Google Fonts / Fontshare via `<link>` (gracefully degradable)
@@ -173,6 +189,7 @@ Generate a single self-contained HTML file:
 ### Verification Checklist
 
 Before delivering, verify:
+
 - [ ] All typography uses `clamp(min, preferred, max)`
 - [ ] All spacing uses `clamp()` or viewport units
 - [ ] Semantic HTML (`<header>`, `<main>`, `<section>`, `<nav>`)
@@ -219,6 +236,12 @@ Would you like me to make any adjustments?
 ## Troubleshooting
 
 **PDF extraction returns little text:** PDF may be image-based (scanned). Ask user to provide text content directly.
+
+**DOCX extraction missing structure:** Some DOCX files don't use standard heading styles (Heading 1/2/3). The extractor falls back to font size from individual runs. If structure is still unclear, ask the user to confirm which lines are section headers.
+
+**JSON Resume fields missing:** The JSON may omit optional sections (projects, certificates, etc.). Present what's available and ask the user if they want to add missing sections manually.
+
+**Markdown frontmatter interference:** YAML frontmatter delimiters (`---`) are skipped automatically. If the resume content itself uses `---` as horizontal rules, they will also be skipped — this is generally harmless.
 
 **Fonts not loading:** Check font URL. Ensure `font-family` declaration includes system font fallback.
 

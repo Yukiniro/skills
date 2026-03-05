@@ -1,6 +1,6 @@
 # Style Presets Reference
 
-Curated visual styles for resume-to-web. Each preset uses distinctive font pairings and color palettes. **No generic AI aesthetics.**
+Curated visual styles for frontend-resume. Each preset uses distinctive font pairings and color palettes. **No generic AI aesthetics.**
 
 ---
 
@@ -8,12 +8,12 @@ Curated visual styles for resume-to-web. Each preset uses distinctive font pairi
 
 Use this table to select 3 presets for guided style discovery:
 
-| Mood | Dark Options | Light Options | Specialty |
-|------|-------------|---------------|-----------|
-| Professional/Authoritative | Midnight Architect, Dark Luxe | Clean Slate, Soft Blueprint | — |
-| Creative/Distinctive | Dark Luxe, Cosmic Depth | Paper Craft | Brutalist Mono, Retro Ink |
-| Modern/Technical | Neon Terminal, Cosmic Depth | Soft Blueprint | Brutalist Mono |
-| Warm/Approachable | Dark Luxe | Paper Craft, Sage Garden | Retro Ink |
+| Mood                       | Dark Options                  | Light Options               | Specialty                 |
+| -------------------------- | ----------------------------- | --------------------------- | ------------------------- |
+| Professional/Authoritative | Midnight Architect, Dark Luxe | Clean Slate, Soft Blueprint | —                         |
+| Creative/Distinctive       | Dark Luxe, Cosmic Depth       | Paper Craft                 | Brutalist Mono, Retro Ink |
+| Modern/Technical           | Neon Terminal, Cosmic Depth   | Soft Blueprint              | Brutalist Mono            |
+| Warm/Approachable          | Dark Luxe                     | Paper Craft, Sage Garden    | Retro Ink                 |
 
 ---
 
@@ -25,26 +25,32 @@ Use this table to select 3 presets for guided style discovery:
 **Best for:** Senior executives, architects, consultants
 
 **Typography:**
+
 - Display: `Clash Display` (600/700) — via Fontshare
 - Body: `Satoshi` (400/500) — via Fontshare
 
 **Font import:**
+
 ```html
-<link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700&f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+<link
+  href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700&f[]=satoshi@400,500,700&display=swap"
+  rel="stylesheet"
+/>
 ```
 
 **Colors:**
+
 ```css
 :root {
-    --bg-primary: #0a0a0f;
-    --bg-secondary: #12121a;
-    --bg-card: #1a1a24;
-    --text-primary: #e8e4dd;
-    --text-secondary: #9a958e;
-    --accent: #c9a96e;
-    --accent-hover: #dbb978;
-    --accent-subtle: rgba(201, 169, 110, 0.1);
-    --border: rgba(201, 169, 110, 0.15);
+  --bg-primary: #0a0a0f;
+  --bg-secondary: #12121a;
+  --bg-card: #1a1a24;
+  --text-primary: #e8e4dd;
+  --text-secondary: #9a958e;
+  --accent: #c9a96e;
+  --accent-hover: #dbb978;
+  --accent-subtle: rgba(201, 169, 110, 0.1);
+  --border: rgba(201, 169, 110, 0.15);
 }
 ```
 
@@ -61,25 +67,31 @@ Use this table to select 3 presets for guided style discovery:
 **Best for:** Software engineers, DevOps, security professionals
 
 **Typography:**
+
 - Display & Body: `JetBrains Mono` (400/700)
 
 **Font import:**
+
 ```html
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link
+  href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap"
+  rel="stylesheet"
+/>
 ```
 
 **Colors:**
+
 ```css
 :root {
-    --bg-primary: #0d1117;
-    --bg-secondary: #161b22;
-    --bg-card: #1c2128;
-    --text-primary: #c9d1d9;
-    --text-secondary: #8b949e;
-    --accent: #39d353;
-    --accent-secondary: #58a6ff;
-    --accent-subtle: rgba(57, 211, 83, 0.1);
-    --border: rgba(57, 211, 83, 0.2);
+  --bg-primary: #0d1117;
+  --bg-secondary: #161b22;
+  --bg-card: #1c2128;
+  --text-primary: #c9d1d9;
+  --text-secondary: #8b949e;
+  --accent: #39d353;
+  --accent-secondary: #58a6ff;
+  --accent-subtle: rgba(57, 211, 83, 0.1);
+  --border: rgba(57, 211, 83, 0.2);
 }
 ```
 
@@ -97,26 +109,32 @@ Use this table to select 3 presets for guided style discovery:
 **Best for:** Creative directors, luxury brand professionals, marketing leads
 
 **Typography:**
+
 - Display: `Cormorant Garamond` (400/600) — elegant serif
 - Body: `DM Sans` (400/500)
 
 **Font import:**
+
 ```html
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<link
+  href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@400;500;700&display=swap"
+  rel="stylesheet"
+/>
 ```
 
 **Colors:**
+
 ```css
 :root {
-    --bg-primary: #1a1a2e;
-    --bg-secondary: #1f1f35;
-    --bg-card: #25253d;
-    --text-primary: #eee8d5;
-    --text-secondary: #a09b90;
-    --accent: #e07a5f;
-    --accent-hover: #e8917a;
-    --accent-subtle: rgba(224, 122, 95, 0.1);
-    --border: rgba(224, 122, 95, 0.15);
+  --bg-primary: #1a1a2e;
+  --bg-secondary: #1f1f35;
+  --bg-card: #25253d;
+  --text-primary: #eee8d5;
+  --text-secondary: #a09b90;
+  --accent: #e07a5f;
+  --accent-hover: #e8917a;
+  --accent-subtle: rgba(224, 122, 95, 0.1);
+  --border: rgba(224, 122, 95, 0.15);
 }
 ```
 
@@ -133,27 +151,36 @@ Use this table to select 3 presets for guided style discovery:
 **Best for:** Tech founders, AI/ML engineers, researchers
 
 **Typography:**
+
 - Display: `Space Grotesk` (500/700)
 - Body: `General Sans` (400/500) — via Fontshare
 
 **Font import:**
+
 ```html
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
+<link
+  href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap"
+  rel="stylesheet"
+/>
+<link
+  href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap"
+  rel="stylesheet"
+/>
 ```
 
 **Colors:**
+
 ```css
 :root {
-    --bg-primary: #0b0b1a;
-    --bg-secondary: #10102a;
-    --bg-card: #16163a;
-    --text-primary: #f0f0f0;
-    --text-secondary: #8888aa;
-    --accent: #7c3aed;
-    --accent-secondary: #06b6d4;
-    --accent-subtle: rgba(124, 58, 237, 0.1);
-    --border: rgba(124, 58, 237, 0.2);
+  --bg-primary: #0b0b1a;
+  --bg-secondary: #10102a;
+  --bg-card: #16163a;
+  --text-primary: #f0f0f0;
+  --text-secondary: #8888aa;
+  --accent: #7c3aed;
+  --accent-secondary: #06b6d4;
+  --accent-subtle: rgba(124, 58, 237, 0.1);
+  --border: rgba(124, 58, 237, 0.2);
 }
 ```
 
@@ -172,26 +199,32 @@ Use this table to select 3 presets for guided style discovery:
 **Best for:** Designers, product managers, anyone wanting clean authority
 
 **Typography:**
+
 - Display: `Instrument Sans` (600/700) — via Google
 - Body: `Source Serif 4` (400/500)
 
 **Font import:**
+
 ```html
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@600;700&family=Source+Serif+4:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link
+  href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@600;700&family=Source+Serif+4:ital,wght@0,400;0,500;1,400&display=swap"
+  rel="stylesheet"
+/>
 ```
 
 **Colors:**
+
 ```css
 :root {
-    --bg-primary: #fafaf9;
-    --bg-secondary: #f5f5f4;
-    --bg-card: #ffffff;
-    --text-primary: #1c1917;
-    --text-secondary: #78716c;
-    --accent: #dc2626;
-    --accent-hover: #b91c1c;
-    --accent-subtle: rgba(220, 38, 38, 0.06);
-    --border: #e7e5e4;
+  --bg-primary: #fafaf9;
+  --bg-secondary: #f5f5f4;
+  --bg-card: #ffffff;
+  --text-primary: #1c1917;
+  --text-secondary: #78716c;
+  --accent: #dc2626;
+  --accent-hover: #b91c1c;
+  --accent-subtle: rgba(220, 38, 38, 0.06);
+  --border: #e7e5e4;
 }
 ```
 
@@ -208,26 +241,32 @@ Use this table to select 3 presets for guided style discovery:
 **Best for:** Writers, educators, academics, non-profit professionals
 
 **Typography:**
+
 - Display: `Lora` (500/700) — warm serif
 - Body: `Nunito Sans` (400/600)
 
 **Font import:**
+
 ```html
-<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,700;1,400&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link
+  href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,700;1,400&family=Nunito+Sans:wght@400;600;700&display=swap"
+  rel="stylesheet"
+/>
 ```
 
 **Colors:**
+
 ```css
 :root {
-    --bg-primary: #fef9ef;
-    --bg-secondary: #faf3e3;
-    --bg-card: #ffffff;
-    --text-primary: #2d2a26;
-    --text-secondary: #7a7570;
-    --accent: #b45309;
-    --accent-hover: #92400e;
-    --accent-subtle: rgba(180, 83, 9, 0.08);
-    --border: #e8dfd0;
+  --bg-primary: #fef9ef;
+  --bg-secondary: #faf3e3;
+  --bg-card: #ffffff;
+  --text-primary: #2d2a26;
+  --text-secondary: #7a7570;
+  --accent: #b45309;
+  --accent-hover: #92400e;
+  --accent-subtle: rgba(180, 83, 9, 0.08);
+  --border: #e8dfd0;
 }
 ```
 
@@ -244,26 +283,32 @@ Use this table to select 3 presets for guided style discovery:
 **Best for:** Engineers, data scientists, technical PMs
 
 **Typography:**
+
 - Display: `IBM Plex Sans` (500/700)
 - Mono: `IBM Plex Mono` (400/500)
 
 **Font import:**
+
 ```html
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<link
+  href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;700&display=swap"
+  rel="stylesheet"
+/>
 ```
 
 **Colors:**
+
 ```css
 :root {
-    --bg-primary: #f8fafc;
-    --bg-secondary: #f1f5f9;
-    --bg-card: #ffffff;
-    --text-primary: #1e293b;
-    --text-secondary: #64748b;
-    --accent: #2563eb;
-    --accent-secondary: #0ea5e9;
-    --accent-subtle: rgba(37, 99, 235, 0.06);
-    --border: #e2e8f0;
+  --bg-primary: #f8fafc;
+  --bg-secondary: #f1f5f9;
+  --bg-card: #ffffff;
+  --text-primary: #1e293b;
+  --text-secondary: #64748b;
+  --accent: #2563eb;
+  --accent-secondary: #0ea5e9;
+  --accent-subtle: rgba(37, 99, 235, 0.06);
+  --border: #e2e8f0;
 }
 ```
 
@@ -282,26 +327,32 @@ Use this table to select 3 presets for guided style discovery:
 **Best for:** Designers, brand strategists, anyone wanting to stand out
 
 **Typography:**
+
 - Display: `Syne` (700/800)
 - Body: `Space Mono` (400/700)
 
 **Font import:**
+
 ```html
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<link
+  href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@700;800&display=swap"
+  rel="stylesheet"
+/>
 ```
 
 **Colors:**
+
 ```css
 :root {
-    --bg-primary: #ffffff;
-    --bg-secondary: #f0f0f0;
-    --bg-card: #ffffff;
-    --text-primary: #000000;
-    --text-secondary: #444444;
-    --accent: #ff3333;
-    --accent-hover: #cc0000;
-    --accent-subtle: rgba(255, 51, 51, 0.05);
-    --border: #000000;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f0f0f0;
+  --bg-card: #ffffff;
+  --text-primary: #000000;
+  --text-secondary: #444444;
+  --accent: #ff3333;
+  --accent-hover: #cc0000;
+  --accent-subtle: rgba(255, 51, 51, 0.05);
+  --border: #000000;
 }
 ```
 
@@ -319,26 +370,32 @@ Use this table to select 3 presets for guided style discovery:
 **Best for:** Environmental professionals, wellness, HR, educators
 
 **Typography:**
+
 - Display: `Fraunces` (500/700) — distinctive serif
 - Body: `Outfit` (400/500)
 
 **Font import:**
+
 ```html
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,700;1,400&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+<link
+  href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,700;1,400&family=Outfit:wght@400;500;600&display=swap"
+  rel="stylesheet"
+/>
 ```
 
 **Colors:**
+
 ```css
 :root {
-    --bg-primary: #f1f5f0;
-    --bg-secondary: #e5ece3;
-    --bg-card: #fafcf9;
-    --text-primary: #1a2e1a;
-    --text-secondary: #5a6e5a;
-    --accent: #2d5a27;
-    --accent-secondary: #8fbc8f;
-    --accent-subtle: rgba(45, 90, 39, 0.08);
-    --border: #c8d8c4;
+  --bg-primary: #f1f5f0;
+  --bg-secondary: #e5ece3;
+  --bg-card: #fafcf9;
+  --text-primary: #1a2e1a;
+  --text-secondary: #5a6e5a;
+  --accent: #2d5a27;
+  --accent-secondary: #8fbc8f;
+  --accent-subtle: rgba(45, 90, 39, 0.08);
+  --border: #c8d8c4;
 }
 ```
 
@@ -355,26 +412,32 @@ Use this table to select 3 presets for guided style discovery:
 **Best for:** Journalists, marketers, personal brand enthusiasts
 
 **Typography:**
+
 - Display: `Playfair Display` (700/900)
 - Body: `Karla` (400/500)
 
 **Font import:**
+
 ```html
-<link href="https://fonts.googleapis.com/css2?family=Karla:wght@400;500;700&family=Playfair+Display:ital,wght@0,700;0,900;1,400&display=swap" rel="stylesheet">
+<link
+  href="https://fonts.googleapis.com/css2?family=Karla:wght@400;500;700&family=Playfair+Display:ital,wght@0,700;0,900;1,400&display=swap"
+  rel="stylesheet"
+/>
 ```
 
 **Colors:**
+
 ```css
 :root {
-    --bg-primary: #fffbf0;
-    --bg-secondary: #f5f0e0;
-    --bg-card: #ffffff;
-    --text-primary: #2c2c2c;
-    --text-secondary: #6b6b6b;
-    --accent: #c43a31;
-    --accent-secondary: #3d5a80;
-    --accent-subtle: rgba(196, 58, 49, 0.06);
-    --border: #d4cbb8;
+  --bg-primary: #fffbf0;
+  --bg-secondary: #f5f0e0;
+  --bg-card: #ffffff;
+  --text-primary: #2c2c2c;
+  --text-secondary: #6b6b6b;
+  --accent: #c43a31;
+  --accent-secondary: #3d5a80;
+  --accent-subtle: rgba(196, 58, 49, 0.06);
+  --border: #d4cbb8;
 }
 ```
 

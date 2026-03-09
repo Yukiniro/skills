@@ -16,6 +16,10 @@ Quickly configure development toolchains, code standards, and AI agent skills fo
 
 [Documentation →](skills/project-setup/SKILL.md)
 
+```bash
+npx skills add https://github.com/Yukiniro/skills --skill project-setup
+```
+
 ### Prompt Optimizer
 
 Transform vague or simple user prompts into high-quality, structured AI instructions. Uses systematic optimization techniques like XML tagging, few-shot examples, and Chain-of-Thought.
@@ -25,6 +29,10 @@ Transform vague or simple user prompts into high-quality, structured AI instruct
 - Improve reliability, accuracy, and format consistency of AI outputs
 
 [Documentation →](skills/prompt-optimizer/SKILL.md)
+
+```bash
+npx skills add https://github.com/Yukiniro/skills --skill prompt-optimizer
+```
 
 ### Frontend Resume
 
@@ -37,6 +45,10 @@ Convert PDF resumes into zero-dependency, animation-rich interactive single-page
 
 [Documentation →](skills/frontend-resume/SKILL.md)
 
+```bash
+npx skills add https://github.com/Yukiniro/skills --skill frontend-resume
+```
+
 ### Resume Screener
 
 Systematically evaluate resumes against job requirements using a 10-level grading system (C → SSS) with 9-dimension multi-angle scoring, producing evidence-driven evaluation reports and hiring recommendations.
@@ -48,50 +60,51 @@ Systematically evaluate resumes against job requirements using a 10-level gradin
 
 [Documentation →](skills/resume-screener/SKILL.md)
 
-## Getting Started
-
-### Claude Code
-
-Install via the Plugin marketplace:
-
 ```bash
-/plugin marketplace add Yukiniro/skills
+npx skills add https://github.com/Yukiniro/skills --skill resume-screener
 ```
 
-Then select `Browse and install plugins` → `yukiniro-skills` → `all-skills` → `Install now`
+### Work Weekly Report
 
-Or install directly:
+Generate structured weekly work summaries from daily work logs. Groups work by project/topic instead of by day, extracting objective facts with categorized dimensions.
 
-```bash
-/plugin install all-skills@yukiniro-skills
-```
+- Group by project/topic, not chronological order
+- Objective facts only — no subjective evaluations
+- Categorize by dimension (Business/Feature, Technical/Infrastructure, Data/Research)
+- Supports bilingual output (Chinese/English)
 
-### Cursor
-
-Clone to a local skills directory:
-
-```bash
-git clone https://github.com/Yukiniro/skills.git ~/.cursor/skills-custom
-```
-
-### npx skills CLI
+[Documentation →](skills/work-weekly-report/SKILL.md)
 
 ```bash
-npx skills add Yukiniro/skills \
-  --skill project-setup prompt-optimizer frontend-resume resume-screener \
-  --agent cursor claude-code agents -y
+npx skills add https://github.com/Yukiniro/skills --skill work-weekly-report
 ```
 
-### Usage
+## Installation
+
+Install all skills at once:
+
+```bash
+npx skills add https://github.com/Yukiniro/skills \
+  --skill project-setup prompt-optimizer frontend-resume resume-screener work-weekly-report
+```
+
+Or install a specific skill:
+
+```bash
+npx skills add https://github.com/Yukiniro/skills --skill frontend-resume
+```
+
+## Usage
 
 In Cursor, Claude Code, or any AI coding assistant that supports Agent Skills:
 
-| Skill            | Example Prompt                                              |
-| ---------------- | ----------------------------------------------------------- |
-| Project Setup    | "Use the project-setup skill to initialize my project"      |
-| Prompt Optimizer | "Use the prompt-optimizer skill to optimize this prompt: …" |
-| Frontend Resume  | "Convert this PDF resume into an interactive web page"      |
-| Resume Screener  | "Evaluate this resume against this job description"         |
+| Skill              | Example Prompt                                              |
+| ------------------ | ----------------------------------------------------------- |
+| Project Setup      | "Use the project-setup skill to initialize my project"      |
+| Prompt Optimizer   | "Use the prompt-optimizer skill to optimize this prompt: …" |
+| Frontend Resume    | "Convert this PDF resume into an interactive web page"      |
+| Resume Screener    | "Evaluate this resume against this job description"         |
+| Work Weekly Report | "Generate a weekly report from these daily logs"            |
 
 ## Creating Custom Skills
 
@@ -144,13 +157,15 @@ skills/
 │   │       ├── HTML_ARCHITECTURE.md
 │   │       ├── STYLE_PRESETS.md
 │   │       └── RESUME_COMPONENTS.md
-│   └── resume-screener/        # Resume screening & evaluation
-│       ├── SKILL.md
-│       ├── LICENSE.txt
-│       └── references/
-│           ├── EVALUATION_DIMENSIONS.md
-│           ├── GRADING_RUBRIC.md
-│           └── OUTPUT_FORMAT.md
+│   ├── resume-screener/        # Resume screening & evaluation
+│   │   ├── SKILL.md
+│   │   ├── LICENSE.txt
+│   │   └── references/
+│   │       ├── EVALUATION_DIMENSIONS.md
+│   │       ├── GRADING_RUBRIC.md
+│   │       └── OUTPUT_FORMAT.md
+│   └── work-weekly-report/     # Weekly report generation
+│       └── SKILL.md
 ├── template/
 │   └── SKILL.md                # New skill creation template
 ├── .gitignore

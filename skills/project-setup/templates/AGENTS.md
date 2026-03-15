@@ -87,8 +87,12 @@ Adjust the following structure based on project type:
 - `components/feature-name/` - Feature components with index.tsx
 - `hooks/` - Custom React Hooks
 - `lib/` - Utilities, configuration, state management
+- `lib/supabase/` - Supabase client variants: browser, server, middleware, admin (if using Supabase)
 - `app/` - Next.js App Router pages
 - `app/[locale]/` - Internationalized routes (if using next-intl)
+- `app/auth/` - Auth callback and auth-related routes (if using Supabase Auth)
+- `app/api/webhooks/` - Webhook handlers for payment providers (if using Creem)
+- `app/actions/` - Server Actions for mutations
 
 **Vite Projects**:
 
@@ -111,6 +115,34 @@ Adjust the following structure based on project type:
 - Configure locale routing in `i18n/routing.ts`
 - Place translation files in `languages/` directory
 - Get translations with `t('key')`
+
+### Authentication (SaaS projects using Supabase Auth)
+
+- Use `createBrowserClient()` from `@supabase/ssr` for client-side auth operations (login, sign-up, OAuth)
+- Use `createServerClient()` from `@supabase/ssr` for server-side auth checks (Server Components, Server Actions, Route Handlers)
+- Never expose `SUPABASE_SERVICE_ROLE_KEY` to the client — only use `NEXT_PUBLIC_` prefix for URL and anon key
+- Auth state on the client: use a custom `useAuth` hook for auth state management
+- Protect routes in `proxy.ts` (Next.js 16+) or `middleware.ts` (Next.js 15) — redirect unauthenticated users
+- OAuth callback: handle token exchange in `app/auth/callback/route.ts`
+- Supabase clients: `lib/supabase/client.ts` (browser), `lib/supabase/server.ts` (server), `lib/supabase/middleware.ts` (middleware/proxy)
+
+### Database (SaaS projects using Supabase)
+
+- Query via Supabase client: `.from('table').select()`, `.insert()`, `.update()`, `.delete()`, `.upsert()`
+- Always use the server client for database operations in Server Components and Server Actions
+- Use admin client (`SUPABASE_SERVICE_ROLE_KEY`) only in trusted server contexts (webhooks, cron jobs)
+- Enable Row-Level Security (RLS) on all tables — filter by `user_id`
+- Use `.single()` when expecting exactly one row, `.maybeSingle()` when the row might not exist
+- Always handle `{ data, error }` response pattern — check error before using data
+
+### Subscription & Payments (SaaS projects using Creem)
+
+- Product configuration lives in `lib/products.ts` — define tiers, limits, and pricing
+- Use Server Actions for checkout flow (`createCheckout()`)
+- Webhook handler at `app/api/webhooks/creem/route.ts` — always verify HMAC-SHA256 signature
+- Client-side subscription status: use `useSubscription` hook
+- Feature gating: check subscription tier before allowing premium features
+- Never trust client-side subscription status for security-critical operations — always verify server-side
 
 ### Naming Conventions
 

@@ -79,13 +79,29 @@ Generate structured weekly work summaries from daily work logs. Groups work by p
 npx skills add https://github.com/Yukiniro/skills --skill work-weekly-report
 ```
 
+### Squash Commits
+
+Squash all commits on the current feature branch (relative to main/master) into a single clean commit while preserving the branch name. Includes safety checks, user confirmation, and smart commit message generation.
+
+- Auto-detect main branch (main/master)
+- Safety checks: clean working directory, not on main, >=2 commits required
+- Smart commit message with all original messages as bullet points
+- Post-squash guidance (force-push reminder)
+- Bilingual triggers (English + Chinese)
+
+[Documentation →](skills/squash-commits/SKILL.md)
+
+```bash
+npx skills add https://github.com/Yukiniro/skills --skill squash-commits
+```
+
 ## Installation
 
 Install all skills at once:
 
 ```bash
 npx skills add https://github.com/Yukiniro/skills \
-  --skill project-setup prompt-optimizer frontend-resume resume-screener work-weekly-report
+  --skill project-setup prompt-optimizer frontend-resume resume-screener work-weekly-report squash-commits
 ```
 
 Or install a specific skill:
@@ -105,6 +121,7 @@ In Cursor, Claude Code, or any AI coding assistant that supports Agent Skills:
 | Frontend Resume    | "Convert this PDF resume into an interactive web page"      |
 | Resume Screener    | "Evaluate this resume against this job description"         |
 | Work Weekly Report | "Generate a weekly report from these daily logs"            |
+| Squash Commits     | "Squash all commits on this branch into one" / "压缩提交"  |
 
 ## Creating Custom Skills
 
@@ -164,7 +181,9 @@ skills/
 │   │       ├── EVALUATION_DIMENSIONS.md
 │   │       ├── GRADING_RUBRIC.md
 │   │       └── OUTPUT_FORMAT.md
-│   └── work-weekly-report/     # Weekly report generation
+│   ├── work-weekly-report/     # Weekly report generation
+│   │   └── SKILL.md
+│   └── squash-commits/         # Git commit squashing
 │       └── SKILL.md
 ├── template/
 │   └── SKILL.md                # New skill creation template

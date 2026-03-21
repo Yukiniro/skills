@@ -17,7 +17,8 @@
         "./skills/project-setup",
         "./skills/prompt-optimizer",
         "./skills/frontend-resume",
-        "./skills/resume-screener"
+        "./skills/resume-screener",
+        "./skills/smart-commit"
       ]
     }
   ]

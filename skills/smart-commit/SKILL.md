@@ -1,115 +1,140 @@
 ---
 name: smart-commit
-description: >
-  Automatically analyze git changes and create Conventional Commits with Chinese descriptions.
-  Use when: user wants to commit, asks to commit code, says commit/smart commit or any
-  Chinese equivalents like 提交/提交代码/保存更改/自动提交. Fully automatic — analyzes diff,
-  determines type, generates Chinese message, and commits without confirmation.
+description: Automated Git commit with Conventional Commits format. Analyzes staged changes, determines commit type and scope, detects description language from commit history (defaults to English), and generates a complete commit message. Use when the user says "commit", "smart commit", "提交代码", "帮我提交", or any variation of requesting a git commit with an auto-generated message.
 ---
 
 # Smart Commit
 
-Analyze staged or unstaged git changes, determine the Conventional Commits type, and create a commit with a Chinese description. Fully automatic — no user confirmation needed.
-
-## Commit Message Format
-
-```
-type(scope): 中文描述
-```
-
-- **type**: Required. One of: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`, `revert`
-- **scope**: Optional. The primary module, directory, or component affected. Omit if changes span many areas.
-- **Description**: Required. Concise Chinese summary of what changed, under 50 characters.
+Analyze code changes and generate a Conventional Commits message automatically. The description language follows the project's existing commit history — if prior commits are in Chinese, the description will be in Chinese; if in English, it will be in English. The user can also specify a language explicitly.
 
 ## Workflow
 
-### Step 1: Pre-flight Checks
+### Step 1: Pre-flight Check
 
 Run `git status` to assess the working tree.
 
-- **No changes at all** (clean working tree) → Tell the user there is nothing to commit and stop.
-- **Merge conflict markers present** → Tell the user to resolve conflicts first and stop.
+- If there are **no changes** (clean working tree, nothing staged), inform the user and stop.
+- If there are **merge conflicts**, inform the user and stop — do not attempt to commit during a conflict.
 
 ### Step 2: Stage Changes
 
-- **If the staging area already has content** (files under "Changes to be committed") → Use staged changes as-is. Do NOT modify the staging area.
-- **If the staging area is empty** → Run `git add -A` to stage all changes including untracked files.
+Check whether the staging area already has content:
 
-### Step 3: Analyze Diff
+- If `git diff --cached --stat` shows staged files, use them as-is — the user intentionally staged specific files.
+- If the staging area is empty but there are unstaged changes, run `git add -A` to stage everything.
 
-Run `git diff --cached --stat` and `git diff --cached` to read the staged diff.
+Before proceeding, check for sensitive files in the staging area (`.env`, `.env.*`, `credentials.*`, `*secret*`, `*.pem`, `*.key`). If any are found, **warn the user and stop** — do not commit secrets.
 
-For large diffs (>500 lines), rely on `--stat` plus the first 200 lines of the full diff. The stat summary is usually sufficient for type/scope determination.
+### Step 3: Analyze Changes
+
+Run these commands to understand what changed:
+
+- `git diff --cached --stat` — file-level summary (which files, insertions/deletions)
+- `git diff --cached` — actual content changes
+
+If the diff output exceeds 200 lines, truncate and work with the summary + first 200 lines. This is enough to determine type, scope, and description.
 
 ### Step 4: Determine Commit Type
 
-Select the type based on these rules (first match wins):
+Based on the changes, select the most appropriate type using this priority order:
 
-| Type       | When to use |
-|------------|-------------|
-| `revert`   | A previous commit is being reverted |
-| `feat`     | New functionality — new files with exports, API endpoints, components, routes |
-| `fix`      | Bug fixes — correcting wrong behavior, fixing errors, patching edge cases |
-| `docs`     | Only `.md` files, comments, or documentation changes |
-| `test`     | Only test files changed (`*.test.*`, `*.spec.*`, `__tests__/`) |
-| `build`    | Build config changes (`package.json` deps, bundler config, `tsconfig`, `Dockerfile`) |
-| `ci`       | CI/CD files (`.github/workflows/`, `.gitlab-ci.yml`, `Jenkinsfile`) |
-| `style`    | Whitespace, formatting, semicolons, CSS-only with no logic change |
-| `perf`     | Optimizations — caching, lazy loading, memoization, algorithm improvements |
-| `refactor` | Code restructuring with no behavior change — renames, extractions, reorganization |
-| `chore`    | Everything else — tooling, config, maintenance, dependency bumps |
+| Priority | Type | When to use |
+|----------|------|-------------|
+| 1 | `revert` | Reverting a previous commit |
+| 2 | `feat` | New feature or capability |
+| 3 | `fix` | Bug fix |
+| 4 | `docs` | Documentation only |
+| 5 | `test` | Adding or updating tests |
+| 6 | `build` | Build system or dependencies |
+| 7 | `ci` | CI/CD configuration |
+| 8 | `style` | Code formatting, whitespace, semicolons |
+| 9 | `perf` | Performance improvement |
+| 10 | `refactor` | Code restructuring without behavior change |
+| 11 | `chore` | Maintenance, tooling, other tasks |
 
-When multiple types apply, choose the one that best describes the **primary intent**.
+If changes span multiple types, use the highest-priority type that covers the primary intent.
 
 ### Step 5: Determine Scope
 
-- All changes in one module/directory → use it as scope (e.g., `auth`, `api`, `utils`)
-- Changes touch a single component → use component name (e.g., `Button`, `login`)
-- Changes span multiple unrelated areas → omit scope
+Scope is the module, component, or area affected:
 
-### Step 6: Generate Chinese Description
+- Single module/component changed → use it as scope (e.g., `auth`, `api`, `button`)
+- Changes span multiple unrelated areas → omit scope entirely
+- Keep scope short — one word when possible
 
-Follow these rules:
+### Step 6: Detect Description Language
 
-1. **Start with a verb**: 添加、修复、更新、重构、优化、移除、调整、配置
-2. **Describe what changed**, not implementation details: "添加用户登录功能" not "在 auth 目录下新建了三个文件"
-3. **Under 50 characters**
-4. **No trailing punctuation**
-5. **Avoid redundancy with type**: If type is `fix`, don't start with "修复" — describe what was fixed instead: `fix(auth): 用户登出后 token 未清除的问题`
+Run `git log --oneline -10` to examine recent commit messages.
 
-### Step 7: Commit
+- Identify the language used in the majority of recent commit descriptions (after the type/scope prefix).
+- Use that same language for the new commit description. This is not limited to Chinese or English — it can be any language the project uses.
+- If the user explicitly requests a language (e.g., "用中文提交", "commit in English"), use the requested language instead.
+- If history is empty or the language cannot be determined, default to **English**.
 
-Run `git commit -m "type(scope): description"`. Pass the message via heredoc for safe formatting:
+### Step 7: Generate Description
 
-```bash
-git commit -m "$(cat <<'EOF'
-type(scope): 中文描述
-EOF
-)"
+Write the description in the detected language:
+
+- Start with a verb (e.g., "add", "fix", "update" / "添加", "修复", "更新")
+- Keep it under 50 characters
+- Do not repeat information already conveyed by the type (e.g., don't write `fix: fix the bug`)
+- Be specific about what changed, not vague
+
+### Step 8: Commit
+
+Run the commit command:
+
+```
+git commit -m "type(scope): description"
 ```
 
-Do NOT use `--no-verify` — let pre-commit hooks run. If a hook fails, report the error and stop.
+Or without scope:
 
-## Examples
+```
+git commit -m "type: description"
+```
 
-| Scenario | Message |
-|----------|---------|
-| New login page and API | `feat(auth): 添加用户登录页面和认证接口` |
-| Fix null pointer in cart | `fix(cart): 修正商品数量为空时的崩溃问题` |
-| Update README | `docs: 更新项目安装说明` |
-| Refactor utils into modules | `refactor(utils): 将工具函数拆分为独立模块` |
-| Add unit tests for parser | `test(parser): 补充解析器的单元测试` |
-| Upgrade dependencies | `build: 升级 React 至 19.x 并更新相关依赖` |
-| GitHub Actions config | `ci: 添加自动化部署工作流` |
-| Format code | `style: 统一代码缩进和引号风格` |
-| Memoize expensive render | `perf(list): 对列表渲染添加 useMemo 优化` |
-| Misc config changes | `chore: 更新 .gitignore 和编辑器配置` |
-| Revert broken release | `revert: 回退 v2.1.0 引入的支付模块变更` |
+**Never skip hooks** — do not use `--no-verify`. If a pre-commit hook fails, report the error to the user and stop. Do not retry automatically.
 
 ## Edge Cases
 
-- **Sensitive files staged** (`.env`, `.env.local`, credentials, private keys): Warn the user and do NOT commit. Suggest adding them to `.gitignore`.
-- **Only lockfile changes** (`package-lock.json`, `pnpm-lock.yaml`, `yarn.lock`): Use `chore(deps): 更新依赖锁文件`.
-- **Lockfile + package.json together**: Use `build: 添加/更新项目依赖`.
-- **Single deleted file**: Reflect the deletion — e.g., `chore: 移除废弃的配置文件`.
-- **Binary files only**: Use `chore: 更新静态资源文件`.
+| Situation | Action |
+|-----------|--------|
+| Clean working tree | Inform user "nothing to commit" and stop |
+| Merge conflicts present | Inform user and stop |
+| `.env` or credential files staged | Warn and refuse to commit |
+| Only lockfile changes (`package-lock.json`, `yarn.lock`, `pnpm-lock.yaml`) | `chore(deps): update lockfile` |
+| Only binary/asset files | `chore: update static assets` |
+| Pre-commit hook fails | Report error, do not retry |
+
+## Examples
+
+**English examples:**
+
+```
+feat(auth): add JWT token refresh mechanism
+fix(api): resolve null pointer in user endpoint
+docs: update installation instructions in README
+test(utils): add unit tests for date formatting
+refactor(db): extract connection pool into shared module
+chore(deps): update lockfile
+style: apply prettier formatting to components
+perf(query): add database index for user lookups
+build: upgrade webpack to v5
+ci: add GitHub Actions workflow for staging deploy
+```
+
+**Chinese examples:**
+
+```
+feat(auth): 添加 JWT 令牌刷新机制
+fix(api): 修复用户接口空指针异常
+docs: 更新 README 安装说明
+test(utils): 为日期格式化添加单元测试
+refactor(db): 将连接池提取为共享模块
+chore(deps): 更新锁文件
+style: 对组件应用 prettier 格式化
+perf(query): 为用户查询添加数据库索引
+build: 升级 webpack 至 v5
+ci: 添加 GitHub Actions 预发布部署流程
+```

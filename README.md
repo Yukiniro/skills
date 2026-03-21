@@ -96,13 +96,29 @@ Automatically analyze git changes and create Conventional Commits with Chinese d
 npx skills add https://github.com/Yukiniro/skills --skill smart-commit
 ```
 
+### Squash Commits
+
+Squash all commits on the current feature branch (relative to main/master) into a single clean commit while preserving the branch name. Includes safety checks, user confirmation, and smart commit message generation.
+
+- Auto-detect main branch (main/master)
+- Safety checks: clean working directory, not on main, >=2 commits required
+- Smart commit message with all original messages as bullet points
+- Post-squash guidance (force-push reminder)
+- Bilingual triggers (English + Chinese)
+
+[Documentation →](skills/squash-commits/SKILL.md)
+
+```bash
+npx skills add https://github.com/Yukiniro/skills --skill squash-commits
+```
+
 ## Installation
 
 Install all skills at once:
 
 ```bash
 npx skills add https://github.com/Yukiniro/skills \
-  --skill project-setup prompt-optimizer frontend-resume resume-screener work-weekly-report smart-commit
+  --skill project-setup prompt-optimizer frontend-resume resume-screener work-weekly-report smart-commit squash-commits
 ```
 
 Or install a specific skill:
@@ -123,6 +139,7 @@ In Cursor, Claude Code, or any AI coding assistant that supports Agent Skills:
 | Resume Screener    | "Evaluate this resume against this job description"         |
 | Work Weekly Report | "Generate a weekly report from these daily logs"            |
 | Smart Commit       | "提交代码" or "Commit my changes"                           |
+| Squash Commits     | "Squash all commits on this branch into one" / "压缩提交"  |
 
 ## Creating Custom Skills
 
@@ -184,7 +201,9 @@ skills/
 │   │       └── OUTPUT_FORMAT.md
 │   ├── work-weekly-report/     # Weekly report generation
 │   │   └── SKILL.md
-│   └── smart-commit/           # Auto git commit with Chinese messages
+│   ├── smart-commit/           # Auto git commit with Chinese messages
+│   │   └── SKILL.md
+│   └── squash-commits/         # Git commit squashing
 │       └── SKILL.md
 ├── template/
 │   └── SKILL.md                # New skill creation template

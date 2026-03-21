@@ -79,6 +79,23 @@ Generate structured weekly work summaries from daily work logs. Groups work by p
 npx skills add https://github.com/Yukiniro/skills --skill work-weekly-report
 ```
 
+### Smart Commit
+
+Automatically analyze git changes and create Conventional Commits with Chinese descriptions. Fully automatic — analyzes diff, determines type, generates message, and commits without confirmation.
+
+- Conventional Commits format: `type(scope): 中文描述`
+- Auto type detection (feat, fix, docs, refactor, perf, test, build, ci, style, chore, revert)
+- Smart staging: uses existing staged changes or stages all if empty
+- Concise Chinese commit descriptions (under 50 characters)
+- Sensitive file detection (`.env`, credentials) — warns and blocks commit
+- Respects pre-commit hooks (no `--no-verify`)
+
+[Documentation →](skills/smart-commit/SKILL.md)
+
+```bash
+npx skills add https://github.com/Yukiniro/skills --skill smart-commit
+```
+
 ### Squash Commits
 
 Squash all commits on the current feature branch (relative to main/master) into a single clean commit while preserving the branch name. Includes safety checks, user confirmation, and smart commit message generation.
@@ -101,7 +118,7 @@ Install all skills at once:
 
 ```bash
 npx skills add https://github.com/Yukiniro/skills \
-  --skill project-setup prompt-optimizer frontend-resume resume-screener work-weekly-report squash-commits
+  --skill project-setup prompt-optimizer frontend-resume resume-screener work-weekly-report smart-commit squash-commits
 ```
 
 Or install a specific skill:
@@ -121,6 +138,7 @@ In Cursor, Claude Code, or any AI coding assistant that supports Agent Skills:
 | Frontend Resume    | "Convert this PDF resume into an interactive web page"      |
 | Resume Screener    | "Evaluate this resume against this job description"         |
 | Work Weekly Report | "Generate a weekly report from these daily logs"            |
+| Smart Commit       | "提交代码" or "Commit my changes"                           |
 | Squash Commits     | "Squash all commits on this branch into one" / "压缩提交"  |
 
 ## Creating Custom Skills
@@ -182,6 +200,8 @@ skills/
 │   │       ├── GRADING_RUBRIC.md
 │   │       └── OUTPUT_FORMAT.md
 │   ├── work-weekly-report/     # Weekly report generation
+│   │   └── SKILL.md
+│   ├── smart-commit/           # Auto git commit with Chinese messages
 │   │   └── SKILL.md
 │   └── squash-commits/         # Git commit squashing
 │       └── SKILL.md

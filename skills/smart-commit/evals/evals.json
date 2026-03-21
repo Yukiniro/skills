@@ -1,0 +1,23 @@
+{
+  "skill_name": "smart-commit",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "帮我提交一下代码",
+      "expected_output": "Stages all changes with git add -A, analyzes the diff, generates a Conventional Commits message with Chinese description, and commits automatically",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "commit my staged changes",
+      "expected_output": "Detects existing staged content, does NOT run git add, analyzes only the staged diff, generates a commit message with Chinese description, and commits",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "smart commit",
+      "expected_output": "When working tree is clean, reports that there is nothing to commit and stops without running any git commands beyond git status",
+      "files": []
+    }
+  ]
+}

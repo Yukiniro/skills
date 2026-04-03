@@ -79,13 +79,62 @@ npx skills add https://github.com/Yukiniro/skills --skill resume-screener
 npx skills add https://github.com/Yukiniro/skills --skill work-weekly-report
 ```
 
+### Smart Commit（智能提交）
+
+自动分析 Git 变更并创建符合 Conventional Commits 规范的提交信息。全自动流程——分析 diff、判断类型、生成信息、执行提交，无需确认。
+
+- Conventional Commits 格式：`type(scope): 描述`
+- 自动类型检测（feat、fix、docs、refactor、perf、test、build、ci、style、chore、revert）
+- 智能暂存：使用已暂存的变更，或在暂存区为空时暂存全部
+- 描述语言自动跟随项目 commit 历史
+- 敏感文件检测（`.env`、credentials）——警告并阻止提交
+- 尊重 pre-commit hooks（不使用 `--no-verify`）
+
+[查看文档 →](skills/smart-commit/SKILL.md)
+
+```bash
+npx skills add https://github.com/Yukiniro/skills --skill smart-commit
+```
+
+### Squash Commits（提交压缩）
+
+将当前功能分支上的所有提交（相对于 main/master）压缩为一个干净的提交，同时保留分支名称。包含安全检查、用户确认和智能提交信息生成。
+
+- 自动检测主分支（main/master）
+- 安全检查：工作目录干净、不在主分支、至少 2 个提交
+- 智能提交信息，原始信息作为列表保留
+- 压缩后引导（force-push 提醒）
+- 中英文双语触发
+
+[查看文档 →](skills/squash-commits/SKILL.md)
+
+```bash
+npx skills add https://github.com/Yukiniro/skills --skill squash-commits
+```
+
+### Deep Code Analysis（深度代码分析）
+
+系统性地分析和理解代码逻辑与业务需求。以"先测量，再理解，最后才动手"为核心原则，通过六步工作流建立对代码的深度认知。
+
+- 六步工作流：明确范围 → 测量 → 结构认知 → 追踪逻辑 → 设计意图 → 呈现结果
+- 三档规模策略：直接分析（<50KB）、按模块深入（50-500KB）、子 agent 并行（>500KB）
+- 多种追踪模式：业务逻辑、数据流、调用链
+- 专注于理解——不做 review、不做开发、不做重构
+- 中英文双语触发
+
+[查看文档 →](skills/deep-code-analysis/SKILL.md)
+
+```bash
+npx skills add https://github.com/Yukiniro/skills --skill deep-code-analysis
+```
+
 ## 安装
 
 一次性安装所有 Skills：
 
 ```bash
 npx skills add https://github.com/Yukiniro/skills \
-  --skill project-setup prompt-optimizer frontend-resume resume-screener work-weekly-report
+  --skill project-setup prompt-optimizer frontend-resume resume-screener work-weekly-report smart-commit squash-commits deep-code-analysis
 ```
 
 或单独安装某个 Skill：
@@ -105,6 +154,9 @@ npx skills add https://github.com/Yukiniro/skills --skill frontend-resume
 | Frontend Resume    | "将这份 PDF 简历转换成交互式网页"                       |
 | Resume Screener    | "根据这份职位描述评估这份简历"                          |
 | Work Weekly Report | "根据这些每日工作日志生成周报"                          |
+| Smart Commit       | "提交代码" 或 "Commit my changes"                       |
+| Squash Commits     | "压缩提交" 或 "Squash all commits on this branch"      |
+| Deep Code Analysis | "分析这个模块" 或 "帮我理解这个业务逻辑"               |
 
 ## 创建自定义 Skill
 
@@ -164,7 +216,13 @@ skills/
 │   │       ├── EVALUATION_DIMENSIONS.md
 │   │       ├── GRADING_RUBRIC.md
 │   │       └── OUTPUT_FORMAT.md
-│   └── work-weekly-report/     # 周报生成
+│   ├── work-weekly-report/     # 周报生成
+│   │   └── SKILL.md
+│   ├── smart-commit/           # 智能 Git 提交
+│   │   └── SKILL.md
+│   ├── squash-commits/         # 提交压缩
+│   │   └── SKILL.md
+│   └── deep-code-analysis/    # 深度代码分析
 │       └── SKILL.md
 ├── template/
 │   └── SKILL.md                # 新 Skill 创建模板

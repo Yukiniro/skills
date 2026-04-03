@@ -112,13 +112,29 @@ Squash all commits on the current feature branch (relative to main/master) into 
 npx skills add https://github.com/Yukiniro/skills --skill squash-commits
 ```
 
+### Deep Code Analysis
+
+Systematically analyze and understand code logic and business requirements. Follows a "measure first, understand second, act last" principle with a 6-step workflow.
+
+- 6-step workflow: scope → measure → structure → trace logic → design intent → present
+- Size-based strategy: direct analysis (<50KB), module-by-module (50-500KB), parallel sub-agents (>500KB)
+- Multiple trace modes: business logic, data flow, call chain
+- Focused on understanding only — no review, no development, no refactoring
+- Bilingual triggers (English + Chinese)
+
+[Documentation →](skills/deep-code-analysis/SKILL.md)
+
+```bash
+npx skills add https://github.com/Yukiniro/skills --skill deep-code-analysis
+```
+
 ## Installation
 
 Install all skills at once:
 
 ```bash
 npx skills add https://github.com/Yukiniro/skills \
-  --skill project-setup prompt-optimizer frontend-resume resume-screener work-weekly-report smart-commit squash-commits
+  --skill project-setup prompt-optimizer frontend-resume resume-screener work-weekly-report smart-commit squash-commits deep-code-analysis
 ```
 
 Or install a specific skill:
@@ -140,6 +156,7 @@ In Cursor, Claude Code, or any AI coding assistant that supports Agent Skills:
 | Work Weekly Report | "Generate a weekly report from these daily logs"            |
 | Smart Commit       | "提交代码" or "Commit my changes"                           |
 | Squash Commits     | "Squash all commits on this branch into one" / "压缩提交"  |
+| Deep Code Analysis | "Analyze this module" / "帮我理解这个业务逻辑"              |
 
 ## Creating Custom Skills
 
@@ -203,7 +220,9 @@ skills/
 │   │   └── SKILL.md
 │   ├── smart-commit/           # Auto git commit with Chinese messages
 │   │   └── SKILL.md
-│   └── squash-commits/         # Git commit squashing
+│   ├── squash-commits/         # Git commit squashing
+│   │   └── SKILL.md
+│   └── deep-code-analysis/    # Deep code & business logic analysis
 │       └── SKILL.md
 ├── template/
 │   └── SKILL.md                # New skill creation template

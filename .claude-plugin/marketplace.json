@@ -18,7 +18,8 @@
         "./skills/prompt-optimizer",
         "./skills/frontend-resume",
         "./skills/resume-screener",
-        "./skills/smart-commit"
+        "./skills/smart-commit",
+        "./skills/any-to-course"
       ]
     }
   ]

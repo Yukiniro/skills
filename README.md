@@ -128,13 +128,30 @@ Systematically analyze and understand code logic and business requirements. Foll
 npx skills add https://github.com/Yukiniro/skills --skill deep-code-analysis
 ```
 
+### Any to Course
+
+Turn a local text file (MD/TXT) or a web URL into two standalone single-page HTML files: a **slide-based courseware** (arrow-key navigation, fullscreen presenting) + a companion **multiple-choice quiz** (submit, see explanations for wrong answers, retry).
+
+- Two artifacts: `<name>.course.html` + `<name>.quiz.html`
+- Slide engine: keyboard nav, overview grid, URL hash memory, print-to-PDF
+- Full interactivity: inline quizzes, SVG diagrams, term tooltips, entrance animations, callouts
+- Quiz is all single/multiple-choice with "retry wrong / retry all", state persisted to localStorage
+- Zero runtime deps single HTML (Google Fonts CDN only), open with a double-click
+- Output language follows input (Chinese in → Chinese out, English in → English out)
+
+[Documentation →](skills/any-to-course/SKILL.md)
+
+```bash
+npx skills add https://github.com/Yukiniro/skills --skill any-to-course
+```
+
 ## Installation
 
 Install all skills at once:
 
 ```bash
 npx skills add https://github.com/Yukiniro/skills \
-  --skill project-setup prompt-optimizer frontend-resume resume-screener work-weekly-report smart-commit squash-commits deep-code-analysis
+  --skill project-setup prompt-optimizer frontend-resume resume-screener work-weekly-report smart-commit squash-commits deep-code-analysis any-to-course
 ```
 
 Or install a specific skill:
@@ -157,6 +174,7 @@ In Cursor, Claude Code, or any AI coding assistant that supports Agent Skills:
 | Smart Commit       | "提交代码" or "Commit my changes"                           |
 | Squash Commits     | "Squash all commits on this branch into one" / "压缩提交"  |
 | Deep Code Analysis | "Analyze this module" / "帮我理解这个业务逻辑"              |
+| Any to Course      | "把这篇文章做成课件" / "Turn this URL into slides"          |
 
 ## Creating Custom Skills
 
@@ -222,8 +240,17 @@ skills/
 │   │   └── SKILL.md
 │   ├── squash-commits/         # Git commit squashing
 │   │   └── SKILL.md
-│   └── deep-code-analysis/    # Deep code & business logic analysis
-│       └── SKILL.md
+│   ├── deep-code-analysis/    # Deep code & business logic analysis
+│   │   └── SKILL.md
+│   └── any-to-course/          # Turn any text/URL into a slide course + quiz
+│       ├── SKILL.md
+│       ├── LICENSE.txt
+│       └── references/
+│           ├── SLIDE_ENGINE.md
+│           ├── INTERACTIVE_ELEMENTS.md
+│           ├── QUIZ_PAGE.md
+│           ├── DESIGN_SYSTEM.md
+│           └── CONTENT_PHILOSOPHY.md
 ├── template/
 │   └── SKILL.md                # New skill creation template
 ├── .gitignore

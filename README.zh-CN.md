@@ -128,13 +128,30 @@ npx skills add https://github.com/Yukiniro/skills --skill squash-commits
 npx skills add https://github.com/Yukiniro/skills --skill deep-code-analysis
 ```
 
+### Any to Course（任意内容转课件）
+
+把本地文本文件（MD/TXT）或网页 URL 转换为两个独立的单页 HTML：一份**幻灯片课件**（左右键翻页、全屏演讲）+ 一份**配套测验**（全部选择题，可交卷、看错题解析、重做错题）。
+
+- 双产物：`<name>.course.html` + `<name>.quiz.html`
+- 幻灯片引擎：键盘导航、总览模式、URL hash 记忆、打印导出 PDF
+- 完整互动：内嵌测验、SVG 示意图、术语 tooltip、入场动画、Callout 提示
+- 测验全为单选/多选，支持「重做错题/全部重做」，状态写入 localStorage
+- 单 HTML 零运行时依赖（仅 Google Fonts CDN），双击即用
+- 输出语言自动跟随输入（中文 → 中文，英文 → 英文）
+
+[查看文档 →](skills/any-to-course/SKILL.md)
+
+```bash
+npx skills add https://github.com/Yukiniro/skills --skill any-to-course
+```
+
 ## 安装
 
 一次性安装所有 Skills：
 
 ```bash
 npx skills add https://github.com/Yukiniro/skills \
-  --skill project-setup prompt-optimizer frontend-resume resume-screener work-weekly-report smart-commit squash-commits deep-code-analysis
+  --skill project-setup prompt-optimizer frontend-resume resume-screener work-weekly-report smart-commit squash-commits deep-code-analysis any-to-course
 ```
 
 或单独安装某个 Skill：
@@ -157,6 +174,7 @@ npx skills add https://github.com/Yukiniro/skills --skill frontend-resume
 | Smart Commit       | "提交代码" 或 "Commit my changes"                       |
 | Squash Commits     | "压缩提交" 或 "Squash all commits on this branch"      |
 | Deep Code Analysis | "分析这个模块" 或 "帮我理解这个业务逻辑"               |
+| Any to Course      | "把这篇文章做成课件" 或 "Turn this URL into slides"     |
 
 ## 创建自定义 Skill
 
@@ -222,8 +240,17 @@ skills/
 │   │   └── SKILL.md
 │   ├── squash-commits/         # 提交压缩
 │   │   └── SKILL.md
-│   └── deep-code-analysis/    # 深度代码分析
-│       └── SKILL.md
+│   ├── deep-code-analysis/    # 深度代码分析
+│   │   └── SKILL.md
+│   └── any-to-course/         # 任意内容转课件 + 测验
+│       ├── SKILL.md
+│       ├── LICENSE.txt
+│       └── references/
+│           ├── SLIDE_ENGINE.md
+│           ├── INTERACTIVE_ELEMENTS.md
+│           ├── QUIZ_PAGE.md
+│           ├── DESIGN_SYSTEM.md
+│           └── CONTENT_PHILOSOPHY.md
 ├── template/
 │   └── SKILL.md                # 新 Skill 创建模板
 ├── .gitignore

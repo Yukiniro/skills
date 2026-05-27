@@ -19,7 +19,8 @@
         "./skills/frontend-resume",
         "./skills/resume-screener",
         "./skills/smart-commit",
-        "./skills/any-to-course"
+        "./skills/any-to-course",
+        "./skills/leafer-js"
       ]
     }
   ]

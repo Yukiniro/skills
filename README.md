@@ -145,13 +145,29 @@ Turn a local text file (MD/TXT) or a web URL into two standalone single-page HTM
 npx skills add https://github.com/Yukiniro/skills --skill any-to-course
 ```
 
+### LeaferJS
+
+Generate, explain, and debug LeaferJS (Leafer) Canvas graphics code — a high-performance 2D Canvas engine for graphic editors, infinite canvases, design tools, and data visualization. Distilled from the official LeaferJS docs into a lean, self-contained skill (no source repo required).
+
+- Package selection (leafer-ui / leafer-editor / leafer-game / leafer) and the `@leafer-in/*` plugin import rules
+- Core patterns: shapes & containers, fill/gradient/stroke/shadow/mask styling, events & dragging, animation & states
+- App architecture, graphic editor, infinite-canvas zoom/pan, Flow auto-layout
+- Vue/React/Next/Nuxt/Node/miniapp integration, JSON save-load, coordinate systems
+- 7 on-demand reference files keep SKILL.md lean; long-tail API points to leaferjs.com
+
+[Documentation →](skills/leafer-js/SKILL.md)
+
+```bash
+npx skills add https://github.com/Yukiniro/skills --skill leafer-js
+```
+
 ## Installation
 
 Install all skills at once:
 
 ```bash
 npx skills add https://github.com/Yukiniro/skills \
-  --skill project-setup prompt-optimizer frontend-resume resume-screener work-weekly-report smart-commit squash-commits deep-code-analysis any-to-course
+  --skill project-setup prompt-optimizer frontend-resume resume-screener work-weekly-report smart-commit squash-commits deep-code-analysis any-to-course leafer-js
 ```
 
 Or install a specific skill:
@@ -175,6 +191,7 @@ In Cursor, Claude Code, or any AI coding assistant that supports Agent Skills:
 | Squash Commits     | "Squash all commits on this branch into one" / "压缩提交"  |
 | Deep Code Analysis | "Analyze this module" / "帮我理解这个业务逻辑"              |
 | Any to Course      | "把这篇文章做成课件" / "Turn this URL into slides"          |
+| LeaferJS           | "Build a canvas editor with LeaferJS" / "用 Leafer 做无限画布" |
 
 ## Creating Custom Skills
 
@@ -242,15 +259,25 @@ skills/
 │   │   └── SKILL.md
 │   ├── deep-code-analysis/    # Deep code & business logic analysis
 │   │   └── SKILL.md
-│   └── any-to-course/          # Turn any text/URL into a slide course + quiz
+│   ├── any-to-course/          # Turn any text/URL into a slide course + quiz
+│   │   ├── SKILL.md
+│   │   ├── LICENSE.txt
+│   │   └── references/
+│   │       ├── SLIDE_ENGINE.md
+│   │       ├── INTERACTIVE_ELEMENTS.md
+│   │       ├── QUIZ_PAGE.md
+│   │       ├── DESIGN_SYSTEM.md
+│   │       └── CONTENT_PHILOSOPHY.md
+│   └── leafer-js/              # LeaferJS canvas engine code generation
 │       ├── SKILL.md
-│       ├── LICENSE.txt
 │       └── references/
-│           ├── SLIDE_ENGINE.md
-│           ├── INTERACTIVE_ELEMENTS.md
-│           ├── QUIZ_PAGE.md
-│           ├── DESIGN_SYSTEM.md
-│           └── CONTENT_PHILOSOPHY.md
+│           ├── elements.md
+│           ├── styling.md
+│           ├── events.md
+│           ├── animation.md
+│           ├── app-editor-viewport.md
+│           ├── plugins.md
+│           └── integration.md
 ├── template/
 │   └── SKILL.md                # New skill creation template
 ├── .gitignore

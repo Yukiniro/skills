@@ -145,13 +145,29 @@ npx skills add https://github.com/Yukiniro/skills --skill deep-code-analysis
 npx skills add https://github.com/Yukiniro/skills --skill any-to-course
 ```
 
+### LeaferJS（Canvas 图形引擎）
+
+生成、解释和调试 LeaferJS（Leafer）Canvas 图形代码——一款高性能 2D Canvas 引擎，适用于图形编辑器、无限画布、设计工具和数据可视化。从 LeaferJS 官方文档提炼为一个轻量、自包含的 Skill（无需源码仓库）。
+
+- 包选择（leafer-ui / leafer-editor / leafer-game / leafer）及 `@leafer-in/*` 插件导入规则
+- 核心模式：图形与容器、填充/渐变/描边/阴影/遮罩样式、事件与拖拽、动画与状态
+- App 架构、图形编辑器、无限画布缩放平移、Flow 自动布局
+- Vue/React/Next/Nuxt/Node/小程序集成、JSON 存取、坐标系
+- 7 个按需加载的参考文件让 SKILL.md 保持精简；长尾 API 指向 leaferjs.com
+
+[查看文档 →](skills/leafer-js/SKILL.md)
+
+```bash
+npx skills add https://github.com/Yukiniro/skills --skill leafer-js
+```
+
 ## 安装
 
 一次性安装所有 Skills：
 
 ```bash
 npx skills add https://github.com/Yukiniro/skills \
-  --skill project-setup prompt-optimizer frontend-resume resume-screener work-weekly-report smart-commit squash-commits deep-code-analysis any-to-course
+  --skill project-setup prompt-optimizer frontend-resume resume-screener work-weekly-report smart-commit squash-commits deep-code-analysis any-to-course leafer-js
 ```
 
 或单独安装某个 Skill：
@@ -175,6 +191,7 @@ npx skills add https://github.com/Yukiniro/skills --skill frontend-resume
 | Squash Commits     | "压缩提交" 或 "Squash all commits on this branch"      |
 | Deep Code Analysis | "分析这个模块" 或 "帮我理解这个业务逻辑"               |
 | Any to Course      | "把这篇文章做成课件" 或 "Turn this URL into slides"     |
+| LeaferJS           | "用 Leafer 做无限画布" 或 "Build a canvas editor with LeaferJS" |
 
 ## 创建自定义 Skill
 
@@ -242,15 +259,25 @@ skills/
 │   │   └── SKILL.md
 │   ├── deep-code-analysis/    # 深度代码分析
 │   │   └── SKILL.md
-│   └── any-to-course/         # 任意内容转课件 + 测验
+│   ├── any-to-course/         # 任意内容转课件 + 测验
+│   │   ├── SKILL.md
+│   │   ├── LICENSE.txt
+│   │   └── references/
+│   │       ├── SLIDE_ENGINE.md
+│   │       ├── INTERACTIVE_ELEMENTS.md
+│   │       ├── QUIZ_PAGE.md
+│   │       ├── DESIGN_SYSTEM.md
+│   │       └── CONTENT_PHILOSOPHY.md
+│   └── leafer-js/             # LeaferJS Canvas 引擎代码生成
 │       ├── SKILL.md
-│       ├── LICENSE.txt
 │       └── references/
-│           ├── SLIDE_ENGINE.md
-│           ├── INTERACTIVE_ELEMENTS.md
-│           ├── QUIZ_PAGE.md
-│           ├── DESIGN_SYSTEM.md
-│           └── CONTENT_PHILOSOPHY.md
+│           ├── elements.md
+│           ├── styling.md
+│           ├── events.md
+│           ├── animation.md
+│           ├── app-editor-viewport.md
+│           ├── plugins.md
+│           └── integration.md
 ├── template/
 │   └── SKILL.md                # 新 Skill 创建模板
 ├── .gitignore

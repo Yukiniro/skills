@@ -2,4 +2,4 @@
 __pycache__/
 .idea/
 .vscode/
-ai-docs/
+.claude/settings.local.json

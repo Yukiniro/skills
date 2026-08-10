@@ -1,0 +1,4 @@
+interface:
+  display_name: "Setup AGENTS.md"
+  short_description: "Initialize or update AGENTS.md engineering principles"
+  default_prompt: "Use $setup-agents-md to initialize or update AGENTS.md with universal engineering principles."

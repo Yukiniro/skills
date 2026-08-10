@@ -20,6 +20,20 @@
 npx skills add https://github.com/Yukiniro/skills --skill project-setup
 ```
 
+### Setup AGENTS.md（项目指引）
+
+在不替换原有内容的前提下，创建或更新 `AGENTS.md` 中可复用的工程原则章节。
+
+- 保留原始文档，只改动工程原则章节
+- 优先简单完整的实现、模块化设计、已有依赖和成熟库
+- 以 `SKILL.md` 作为唯一真源，避免重复模板
+
+[查看文档 →](skills/setup-agents-md/SKILL.md)
+
+```bash
+npx skills add https://github.com/Yukiniro/skills --skill setup-agents-md
+```
+
 ### Prompt Optimizer（提示词优化）
 
 将模糊或简单的用户提示词转化为高质量、结构化的 AI 指令。运用 XML 标签、Few-shot 示例、思维链（Chain-of-Thought）等系统化优化技术。
@@ -167,7 +181,7 @@ npx skills add https://github.com/Yukiniro/skills --skill leafer-js
 
 ```bash
 npx skills add https://github.com/Yukiniro/skills \
-  --skill project-setup prompt-optimizer frontend-resume resume-screener work-weekly-report smart-commit squash-commits deep-code-analysis any-to-course leafer-js
+  --skill project-setup setup-agents-md prompt-optimizer frontend-resume resume-screener work-weekly-report smart-commit squash-commits deep-code-analysis any-to-course leafer-js
 ```
 
 或单独安装某个 Skill：
@@ -183,6 +197,7 @@ npx skills add https://github.com/Yukiniro/skills --skill frontend-resume
 | Skill              | 示例提示词                                              |
 | ------------------ | ------------------------------------------------------- |
 | Project Setup      | "使用 project-setup skill 初始化我的项目"               |
+| Setup AGENTS.md    | "用工程原则创建或更新 AGENTS.md"                      |
 | Prompt Optimizer   | "使用 prompt-optimizer skill 优化这段提示词：……"        |
 | Frontend Resume    | "将这份 PDF 简历转换成交互式网页"                       |
 | Resume Screener    | "根据这份职位描述评估这份简历"                          |
@@ -230,6 +245,10 @@ skills/
 │   │       ├── prettier.config.md
 │   │       ├── vitest.config.md
 │   │       └── next-intl.config.md
+│   ├── setup-agents-md/        # 创建或更新 AGENTS.md
+│   │   ├── SKILL.md
+│   │   ├── agents/
+│   │   │   └── openai.yaml
 │   ├── prompt-optimizer/       # 提示词优化
 │   │   ├── SKILL.md
 │   │   ├── LICENSE.txt

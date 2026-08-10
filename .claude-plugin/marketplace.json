@@ -15,10 +15,14 @@
       "strict": false,
       "skills": [
         "./skills/project-setup",
+        "./skills/setup-agents-md",
         "./skills/prompt-optimizer",
         "./skills/frontend-resume",
         "./skills/resume-screener",
+        "./skills/work-weekly-report",
         "./skills/smart-commit",
+        "./skills/squash-commits",
+        "./skills/deep-code-analysis",
         "./skills/any-to-course",
         "./skills/leafer-js"
       ]

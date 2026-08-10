@@ -20,6 +20,20 @@ Quickly configure development toolchains, code standards, and AI agent skills fo
 npx skills add https://github.com/Yukiniro/skills --skill project-setup
 ```
 
+### Setup AGENTS.md
+
+Create or update a reusable engineering-principles section in `AGENTS.md` without replacing its existing content.
+
+- Preserves the original document and changes only its engineering-principles section
+- Prefers simple complete solutions, modular design, existing dependencies, and mature libraries
+- Uses `SKILL.md` as the single source of truth, avoiding a duplicate template
+
+[Documentation →](skills/setup-agents-md/SKILL.md)
+
+```bash
+npx skills add https://github.com/Yukiniro/skills --skill setup-agents-md
+```
+
 ### Prompt Optimizer
 
 Transform vague or simple user prompts into high-quality, structured AI instructions. Uses systematic optimization techniques like XML tagging, few-shot examples, and Chain-of-Thought.
@@ -167,7 +181,7 @@ Install all skills at once:
 
 ```bash
 npx skills add https://github.com/Yukiniro/skills \
-  --skill project-setup prompt-optimizer frontend-resume resume-screener work-weekly-report smart-commit squash-commits deep-code-analysis any-to-course leafer-js
+  --skill project-setup setup-agents-md prompt-optimizer frontend-resume resume-screener work-weekly-report smart-commit squash-commits deep-code-analysis any-to-course leafer-js
 ```
 
 Or install a specific skill:
@@ -183,6 +197,7 @@ In Cursor, Claude Code, or any AI coding assistant that supports Agent Skills:
 | Skill              | Example Prompt                                              |
 | ------------------ | ----------------------------------------------------------- |
 | Project Setup      | "Use the project-setup skill to initialize my project"      |
+| Setup AGENTS.md    | "Create or update AGENTS.md with engineering principles"   |
 | Prompt Optimizer   | "Use the prompt-optimizer skill to optimize this prompt: …" |
 | Frontend Resume    | "Convert this PDF resume into an interactive web page"      |
 | Resume Screener    | "Evaluate this resume against this job description"         |
@@ -230,6 +245,10 @@ skills/
 │   │       ├── prettier.config.md
 │   │       ├── vitest.config.md
 │   │       └── next-intl.config.md
+│   ├── setup-agents-md/        # Create or update AGENTS.md
+│   │   ├── SKILL.md
+│   │   ├── agents/
+│   │   │   └── openai.yaml
 │   ├── prompt-optimizer/       # Prompt optimization
 │   │   ├── SKILL.md
 │   │   ├── LICENSE.txt

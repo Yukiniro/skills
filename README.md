@@ -34,6 +34,20 @@ Create or update a reusable engineering-principles section in `AGENTS.md` withou
 npx skills add https://github.com/Yukiniro/skills --skill setup-agents-md
 ```
 
+### Optimize AGENTS.md
+
+Audit and revise existing `AGENTS.md` using locally distilled guidance from OpenAI's Astra article. No article fetch is needed when running the skill.
+
+- Check repository facts, conditional reading, authorization boundaries, and completion criteria
+- Support read-only audits or direct edits while preserving project requirements
+- Keep the article's decision principles bundled with the skill
+
+[Documentation →](skills/optimize-agents-md/SKILL.md)
+
+```bash
+npx skills add https://github.com/Yukiniro/skills --skill optimize-agents-md
+```
+
 ### Prompt Optimizer
 
 Transform vague or simple user prompts into high-quality, structured AI instructions. Uses systematic optimization techniques like XML tagging, few-shot examples, and Chain-of-Thought.
@@ -181,7 +195,7 @@ Install all skills at once:
 
 ```bash
 npx skills add https://github.com/Yukiniro/skills \
-  --skill project-setup setup-agents-md prompt-optimizer frontend-resume resume-screener work-weekly-report smart-commit squash-commits deep-code-analysis any-to-course leafer-js
+  --skill project-setup setup-agents-md optimize-agents-md prompt-optimizer frontend-resume resume-screener work-weekly-report smart-commit squash-commits deep-code-analysis any-to-course leafer-js
 ```
 
 Or install a specific skill:
@@ -198,6 +212,7 @@ In Cursor, Claude Code, or any AI coding assistant that supports Agent Skills:
 | ------------------ | ----------------------------------------------------------- |
 | Project Setup      | "Use the project-setup skill to initialize my project"      |
 | Setup AGENTS.md    | "Create or update AGENTS.md with engineering principles"   |
+| Optimize AGENTS.md | "Use optimize-agents-md to audit and simplify AGENTS.md" |
 | Prompt Optimizer   | "Use the prompt-optimizer skill to optimize this prompt: …" |
 | Frontend Resume    | "Convert this PDF resume into an interactive web page"      |
 | Resume Screener    | "Evaluate this resume against this job description"         |
@@ -249,6 +264,10 @@ skills/
 │   │   ├── SKILL.md
 │   │   ├── agents/
 │   │   │   └── openai.yaml
+│   ├── optimize-agents-md/     # Audit and optimize existing AGENTS.md
+│   │   ├── SKILL.md
+│   │   └── references/
+│   │       └── astra-principles.md
 │   ├── prompt-optimizer/       # Prompt optimization
 │   │   ├── SKILL.md
 │   │   ├── LICENSE.txt

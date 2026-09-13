@@ -34,6 +34,20 @@ npx skills add https://github.com/Yukiniro/skills --skill project-setup
 npx skills add https://github.com/Yukiniro/skills --skill setup-agents-md
 ```
 
+### Optimize AGENTS.md（指引优化）
+
+根据已内置提炼的 OpenAI Astra 文章原则，审查和改写已有 `AGENTS.md`，使用时无需重新获取原文。
+
+- 核实仓库事实，优化按需读取、授权边界与完成标准
+- 支持只读审查或直接修改，保留项目必要约束
+- 随 skill 提供离线原则与来源说明
+
+[查看文档 →](skills/optimize-agents-md/SKILL.md)
+
+```bash
+npx skills add https://github.com/Yukiniro/skills --skill optimize-agents-md
+```
+
 ### Prompt Optimizer（提示词优化）
 
 将模糊或简单的用户提示词转化为高质量、结构化的 AI 指令。运用 XML 标签、Few-shot 示例、思维链（Chain-of-Thought）等系统化优化技术。
@@ -181,7 +195,7 @@ npx skills add https://github.com/Yukiniro/skills --skill leafer-js
 
 ```bash
 npx skills add https://github.com/Yukiniro/skills \
-  --skill project-setup setup-agents-md prompt-optimizer frontend-resume resume-screener work-weekly-report smart-commit squash-commits deep-code-analysis any-to-course leafer-js
+  --skill project-setup setup-agents-md optimize-agents-md prompt-optimizer frontend-resume resume-screener work-weekly-report smart-commit squash-commits deep-code-analysis any-to-course leafer-js
 ```
 
 或单独安装某个 Skill：
@@ -198,6 +212,7 @@ npx skills add https://github.com/Yukiniro/skills --skill frontend-resume
 | ------------------ | ------------------------------------------------------- |
 | Project Setup      | "使用 project-setup skill 初始化我的项目"               |
 | Setup AGENTS.md    | "用工程原则创建或更新 AGENTS.md"                      |
+| Optimize AGENTS.md | "使用 optimize-agents-md 审查并精简 AGENTS.md" |
 | Prompt Optimizer   | "使用 prompt-optimizer skill 优化这段提示词：……"        |
 | Frontend Resume    | "将这份 PDF 简历转换成交互式网页"                       |
 | Resume Screener    | "根据这份职位描述评估这份简历"                          |
@@ -249,6 +264,10 @@ skills/
 │   │   ├── SKILL.md
 │   │   ├── agents/
 │   │   │   └── openai.yaml
+│   ├── optimize-agents-md/     # 审查和优化已有 AGENTS.md
+│   │   ├── SKILL.md
+│   │   └── references/
+│   │       └── astra-principles.md
 │   ├── prompt-optimizer/       # 提示词优化
 │   │   ├── SKILL.md
 │   │   ├── LICENSE.txt

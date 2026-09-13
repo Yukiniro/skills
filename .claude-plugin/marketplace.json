@@ -16,6 +16,7 @@
       "skills": [
         "./skills/project-setup",
         "./skills/setup-agents-md",
+        "./skills/optimize-agents-md",
         "./skills/prompt-optimizer",
         "./skills/frontend-resume",
         "./skills/resume-screener",

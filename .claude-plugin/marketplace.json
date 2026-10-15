@@ -25,7 +25,8 @@
         "./skills/squash-commits",
         "./skills/deep-code-analysis",
         "./skills/any-to-course",
-        "./skills/leafer-js"
+        "./skills/leafer-js",
+        "./skills/browser-extension-best-practices"
       ]
     }
   ]

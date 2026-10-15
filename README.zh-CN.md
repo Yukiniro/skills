@@ -189,13 +189,28 @@ npx skills add https://github.com/Yukiniro/skills --skill any-to-course
 npx skills add https://github.com/Yukiniro/skills --skill leafer-js
 ```
 
+### Browser Extension Best Practices（浏览器插件最佳实践）
+
+帮助其他项目学习并选用浏览器插件项目的最佳实践。面对具体问题时，在保留现状、接入能力、局部重构、暂缓之间选择；借鉴设计，保留目标项目自己的工具、目录和实现。
+
+- 按问题路由到架构与界面、质量与演进、文档
+- 决策记录包括证据、边界、最小改动、验收和回退
+- 只要求分析时停在决策；用户点名某一档后才改目标项目
+- 已有等价能力就保留。来源依赖版本不是升级要求
+
+[查看文档 →](skills/browser-extension-best-practices/SKILL.md)
+
+```bash
+npx skills add https://github.com/Yukiniro/skills --skill browser-extension-best-practices
+```
+
 ## 安装
 
 一次性安装所有 Skills：
 
 ```bash
 npx skills add https://github.com/Yukiniro/skills \
-  --skill project-setup setup-agents-md optimize-agents-md prompt-optimizer frontend-resume resume-screener work-weekly-report smart-commit squash-commits deep-code-analysis any-to-course leafer-js
+  --skill project-setup setup-agents-md optimize-agents-md prompt-optimizer frontend-resume resume-screener work-weekly-report smart-commit squash-commits deep-code-analysis any-to-course leafer-js browser-extension-best-practices
 ```
 
 或单独安装某个 Skill：
@@ -222,6 +237,7 @@ npx skills add https://github.com/Yukiniro/skills --skill frontend-resume
 | Deep Code Analysis | "分析这个模块" 或 "帮我理解这个业务逻辑"               |
 | Any to Course      | "把这篇文章做成课件" 或 "Turn this URL into slides"     |
 | LeaferJS           | "用 Leafer 做无限画布" 或 "Build a canvas editor with LeaferJS" |
+| Browser Extension Best Practices | "用浏览器插件最佳实践评估要不要接入" 或 "Apply browser extension best practices" |
 
 ## 创建自定义 Skill
 
@@ -306,16 +322,23 @@ skills/
 │   │       ├── QUIZ_PAGE.md
 │   │       ├── DESIGN_SYSTEM.md
 │   │       └── CONTENT_PHILOSOPHY.md
-│   └── leafer-js/             # LeaferJS Canvas 引擎代码生成
+│   ├── leafer-js/             # LeaferJS Canvas 引擎代码生成
+│   │   ├── SKILL.md
+│   │   └── references/
+│   │       ├── elements.md
+│   │       ├── styling.md
+│   │       ├── events.md
+│   │       ├── animation.md
+│   │       ├── app-editor-viewport.md
+│   │       ├── plugins.md
+│   │       └── integration.md
+│   └── browser-extension-best-practices/ # 浏览器插件最佳实践
 │       ├── SKILL.md
 │       └── references/
-│           ├── elements.md
-│           ├── styling.md
-│           ├── events.md
-│           ├── animation.md
-│           ├── app-editor-viewport.md
-│           ├── plugins.md
-│           └── integration.md
+│           ├── guide.md
+│           ├── architecture-and-ui.md
+│           ├── quality-and-evolution.md
+│           └── documentation.md
 ├── template/
 │   └── SKILL.md                # 新 Skill 创建模板
 ├── .gitignore

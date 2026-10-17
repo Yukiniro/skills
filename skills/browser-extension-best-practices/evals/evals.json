@@ -1,0 +1,41 @@
+{
+  "skill_name": "browser-extension-best-practices",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "现有 React 扩展使用 Zustand、Radix 和 CSS Modules，设置与键盘操作已有通过的回归测试。本次只要求统一 popup 和 options 的颜色 Token。使用本 skill 给出最小实现方案。",
+      "expected_output": "保留已满足需求的状态与组件库，限定为共享语义 Token 和相关界面验证；不要求迁移 Jotai 或 Base UI，不扩展到发布流程。",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "WXT + React 扩展尚无共享状态、组件库、国际化和版本流程。现在要增加 popup/options 共用设置、可访问下拉框、中英界面和可审阅的发版流程。给出推荐库与渐进接入顺序，不执行修改。",
+      "expected_output": "明确推荐 Jotai、Base UI、WXT i18n、Changesets，说明各自职责、最小接入和验收；设置涉及独立上下文，发布覆盖版本 PR、固定提交、最终 ZIP、Release 和商店状态。",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "popup 与 options 各自 createStore，各自用 Promise 队列执行 load→merge→save 整份 settings。两个入口先读到同一值，再分别修改 theme 和 language 后保存。单 store 测试通过。帮我分析丢设置的原因与修复边界。",
+      "expected_output": "识别跨上下文读改写竞争，队列和 storage watch 不提供全局事务；收敛全部写入入口到按持久对象排队的后台或事务存储，验证两个独立上下文交错和失败恢复，考虑 worker 重启。",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "当前只使用 WXT i18n。用户要求在扩展内切换界面语言且不丢失未保存的设置草稿，manifest 仍按浏览器语言显示。给出最小方案。",
+      "expected_output": "指出 WXT i18n 本身跟随浏览器语言；保留 manifest 生成，接入运行时语言引擎和订阅，复用资源并定义回退；验证草稿、焦点与非 React 文案，不通过重挂载整棵树实现切换。",
+      "files": []
+    },
+    {
+      "id": 5,
+      "prompt": "某版本源码测试通过；脚本验证 build 目录后运行会重新构建的 zip 命令。远端 tag 指向另一个提交，GitHub Release 已存在但缺一个 ZIP，Chrome 已上传待审核，Edge 还没提交。仅分析如何恢复发布，不访问远端。",
+      "expected_output": "停止发布并报告 tag 提交冲突，不移动 tag；必须核验最终 ZIP，Release 存在不代表完整，不凭源码测试宣称产物可用。冲突解决后核验已有附件并补缺，保留已完成渠道状态；Chrome 待审核不等于公开，遵守只分析边界。",
+      "files": []
+    },
+    {
+      "id": 6,
+      "prompt": "已发布扩展要把 local:settings 改成 local:preferences，旧设置包含用户站点列表。仓库写着不要保留内部兼容代码。新读取器用默认空列表兜底，打算直接删除旧 key。请评估方案。",
+      "expected_output": "区分内部代码兼容与已发布用户数据，保留 key 或显式迁移/重置契约，不能静默丢用户列表；验证历史值保留、未来版本、转换失败、数据与版本写入中断及安全重试，简单变化不强制引入复杂框架。",
+      "files": []
+    }
+  ]
+}

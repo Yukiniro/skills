@@ -1,130 +1,88 @@
-# 技术栈 项目结构 国际化 组件样式与状态管理
+# 架构与界面
 
-用于需要选择依赖、调整业务边界或重构界面基础设施的任务。先按 [主文档](guide.md) 确认问题，只采用与目标项目约束匹配的部分。
+按 [优化流程](guide.md) 限定场景。以下是缺少对应能力时的默认推荐；已有等价实现按职责、缺陷和迁移成本决定是否替换。
 
-## 技术栈
+## 推荐技术与模块边界
 
-### 来源实现
-
-来源项目是单包浏览器扩展。主要技术及职责如下；版本为来源快照声明的版本范围或主版本。
-
-| 职责 | 技术 | 实际用途 |
+| 能力 | 推荐 | 接入条件 |
 | --- | --- | --- |
-| 扩展构建 | WXT 0.21.4、Vite 8、Manifest V3 | 多入口和多浏览器构建 |
-| 界面与语言 | React 19、TypeScript 7、React Router 8 | 扩展页面、类型检查、设置页 Hash Router 与懒加载 |
-| 样式 | Tailwind CSS 4、Base UI、shadcn、CVA、Motion | 基础交互、组件变体、主题及动画 |
-| 状态与表单 | Jotai、TanStack Query、Form、React Store | 本地共享状态、远程数据、表单及表单状态订阅 |
-| 服务接入 | AI SDK 7、多种 Provider 适配器、oRPC | 模型调用与托管服务契约 |
-| 扩展通信 | webext-core messaging、runtime Port | 类型化消息与流式通道 |
-| 持久化 | WXT Storage、Dexie | 配置、IndexedDB 缓存与术语表 |
-| 校验与国际化 | Zod 4、i18next、WXT i18n、YAML | 运行时数据边界与多语言资源 |
-| 工具链 | pnpm、Nx、Vitest、Oxlint、Oxfmt | 安装、任务缓存、测试和检查 |
+| 扩展工程 | WXT + TypeScript | 新建或需要多入口、浏览器目标和产物管理时优先；现有框架迁移须有明确收益 |
+| 复杂交互界面 | React | 多组件共享状态和复杂控件需要时采用；简单内容脚本可直接使用 DOM |
+| React 共享状态 | Jotai | 设置、选中项和派生视图跨组件共享，详见状态管理 |
+| 可访问交互原语 | Base UI（`@base-ui/react`） | React 下拉框、对话框、滑块等；样式沿用现有方案 |
+| 扩展国际化 | WXT i18n（`@wxt-dev/i18n`） | 类型化翻译与浏览器语言、manifest 资源集成 |
+| 设置持久化 | WXT Storage 或现有 browser.storage 适配层 | 集中读写、订阅和校验；演进格式时接版本机制 |
+| 版本与变更记录 | Changesets | 用户可见变更、版本 PR 与发布追踪，见 [质量与演进](quality-and-evolution.md) |
 
-定义、契约和布局由相邻仓库的外部包提供。开发配置允许别名指向这些源码，并阻止这种模式下生成发布 ZIP。
+仅在出现对应需求时增加 TanStack Query（远程缓存）、TanStack Form（复杂表单）、Zod（复杂运行时数据校验）或 Dexie（结构化 IndexedDB 数据）。简单字段可用局部状态和显式校验。依赖版本从项目及官方兼容要求确认，不在指南固定版本矩阵。
 
-依据：`package.json`、`wxt.config.ts`。
-
-### 接入建议
-
-先比较职责，再比较库名。已有路由、状态、表单或校验库能够履行相同契约时，沿用现有实现。WXT 适用于扩展构建；服务端框架、SSR 应用或桌面工具应依据自身入口和部署方式选择工具。
-
-为每个新增依赖写出直接使用它的模块和替代方案。只有独立发布、复用或依赖隔离确实需要时才拆包；出现 workspace 配置或 Nx 并不自动意味着需要 monorepo。
-
-**最小接入：** 选一个场景，接入一个缺失能力，核对生产构建及依赖变化。完成条件是业务能力可达、依赖职责清晰、原有检查仍成立。
-
-## 项目结构
-
-### 来源实现
-
-| 位置 | 职责 |
-| --- | --- |
-| `src/entrypoints/background` | 请求队列、缓存、消息处理、配置初始化与后台服务 |
-| `host.content`、`selection.content`、`subtitles.content` | 网页翻译、划词操作和字幕运行时 |
-| MAIN world 拦截入口 | 在页面环境中对接播放器等能力 |
-| `popup`、`options`、`sidepanel`、`translation-hub` | 独立扩展界面 |
-| `offscreen` | 后台音频播放 |
-| `src/components`、`hooks`、`types` | 共享组件、React 逻辑、消息及配置类型 |
-| `src/utils` | 翻译、Provider、存储、迁移及其他业务实现 |
-
-网页翻译的一条主路径是：内容脚本准备文本，通过类型化消息请求后台；后台处理缓存、排队与服务调用，再返回结果，由内容脚本更新 DOM。后台同步注册监听，再异步初始化配置和语言资源，以适应 MV3 唤醒。
-
-依据：`src/entrypoints/background/index.ts`、`src/entrypoints/background/page-translation.ts`、`src`。
-
-### 接入建议
-
-按运行环境、生命周期、数据所有者与依赖方向建立边界。页面只使用的业务留在该业务附近；多个入口共享且语义稳定的能力再提取。来源项目的 `utils` 包含大量业务代码，目标项目可依据真实职责使用领域目录，无需复刻名称。
-
-优先整理一条调用链：入口只负责组装，业务模块表达规则，适配器处理平台差异。已有函数能承载单一职责时直接复用；只有稳定差异出现后再增加接口或策略层。
-
-**最小重构：** 抽出一个重复的服务适配或业务规则，迁移相关调用方。完成条件是状态所有权和副作用位置清晰，依赖方向可解释，没有为预想平台增加空实现。
-
-## 国际化
-
-### 来源实现
-
-同一份 `src/locales/*.yml` 服务于两条路径：WXT 生成 manifest 使用的 `_locales` 产物和翻译键类型；运行时通过 YAML 插件载入资源，由 i18next 提供可切换语言的 UI 文案。
-
-`utils/i18n` 提供兼容门面，保留 `i18n.t(key, substitutions)` 调用方式，将 `$1` 等占位符转换为 i18next 插值。Prompt 中的命名占位符单独保留，避免翻译阶段提前消费。语言由 `uiLanguage` 解析，“auto”跟随浏览器，不支持的语言回退到默认语言；内容目标语言与界面语言另行处理。
-
-每个 JS 上下文分别初始化国际化。React 的 `LocaleBoundary` 根据解析后的 locale 给子树重新设置 key，使文案重新计算；Jotai 与 Query Provider 位于该边界外。背景菜单等创建时固定的文案需要显式重建。
-
-依据：`src/utils/i18n/index.ts`、`src/utils/i18n/resources.ts`、`src/utils/i18n/locale-boundary.tsx`、`wxt.config.ts`。
-
-### 接入建议
-
-| 目标需求 | 合适做法 |
-| --- | --- |
-| 当前国际化已支持所需行为 | 保留库、资源格式与订阅机制 |
-| 替换引擎但调用方很多 | 用窄门面适配旧 API，按模块迁移调用方 |
-| 需要运行时语言切换 | 定义语言来源、回退和订阅，更新依赖语言的派生值 |
-| 同时存在 UI 文案和 Prompt 模板 | 明确各阶段消费的占位符，分别验证 |
-| 语言资源较大，需要异步加载 | 等待目标资源就绪后切换，定义加载与错误行为 |
-
-整棵子树重新挂载会重置其内部组件状态、草稿和编辑器实例。只有这些状态可以重建时才采用 来源项目的方式；需要保留编辑会话时，优先使用现有国际化订阅或更小刷新边界。其同步资源假设也需要与目标项目核对。
-
-`escapeValue: false` 是来源配置，不能视为任意 HTML 渲染授权；输出到 React 文本、HTML 或 Prompt 时仍按各自边界处理。
-
-**最小接入：** 迁移一个页面及一组非 React 文案。完成条件是首屏、切换、回退和占位符结果正确，并验证草稿、焦点与持久状态符合产品契约。通用测试若把 i18n 和语言边界 mock 掉，需要另做真实切换验证。
-
-## 组件与样式
-
-### 来源实现
-
-`theme.css` 将背景、文本、边框、品牌、危险状态、圆角和阴影组织为语义 Token，通过 `--rf-*` 变量映射到 Tailwind。Base UI 提供交互原语，组件通过 CVA 定义 `variant` 与 `size`，业务组件消费统一基础组件。`components.json` 指定 shadcn 的生成目录和样式入口。
-
-独立扩展页面把主题应用到文档根；注入 UI 可以指定容器，在 Shadow DOM 内使用主题。PostCSS 将 Tailwind 内部 `--tw-*` 属性改名前缀，并将 rem 转成 px，以降低宿主网页环境影响。Shadow DOM 仍会涉及继承变量、字体、Portal 与定位边界，需要配套处理。
-
-依据：`src/assets/styles/theme.css`、`src/components/ui/base-ui/button.tsx`、`src/components/providers/theme-provider.tsx`、`postcss.config.cjs`。
-
-### 接入建议
-
-先统一语义 Token，再统一重复组件，最后按需要调整工具链。CSS Modules、现有组件库或其他样式方案也可以消费同一组 CSS 变量。优先为真实交互增加明确的组件变体；业务编排与无业务含义的基础组件分别维护。
-
-普通 Web 应用无需为扩展宿主兼容而整体引入 Shadow DOM、变量重命名或 rem 转 px。嵌入第三方页面的项目应在冲突页面上验证隔离方案；单位策略需要同时检查浏览器缩放、用户字体偏好和布局要求。
-
-**最小接入：** 选择高频按钮与一个表单，统一其 Token、状态和用法。完成条件是亮暗主题、禁用、错误、键盘焦点及浮层定位符合预期，并能删除被替代的重复样式。
+按运行环境组织模块：后台协调扩展能力，内容脚本操作所在页面，popup/options/sidepanel 组合界面，共享模块承载稳定的业务规则与消息类型。业务代码靠近功能，平台适配集中在边界；目录名称沿用项目习惯。只因出现多个入口而拆包通常没有收益，独立交付或依赖隔离才构成拆分理由。
 
 ## 状态管理
 
-### 来源实现
+**推荐 Jotai 管理 React 共享客户端状态。** 用基础 atom 保存已加载视图，用派生 atom 或 `selectAtom` 订阅实际消费的字段；只读、只写组件分别使用 `useAtomValue`、`useSetAtom`。在稳定位置创建 atom 和 store，避免 render 时重建。需要 React 外访问时使用 `createStore` 的 `get/set/sub`；同一界面用 Provider 传入该 store。[Jotai Store 文档](https://jotai.org/docs/core/store)
 
-| 数据 | 来源项目的主要承载方式 | 可借鉴的边界 |
+| 数据 | 权威位置 | 更新边界 |
 | --- | --- | --- |
-| 组件短期交互 | React 局部状态 | 由拥有交互的组件管理 |
-| 共享配置视图与派生值 | Jotai、selectAtom、atomFamily | 订阅实际消费的数据 |
-| 远程数据与 mutation | TanStack Query、oRPC 工具 | 查询键、失效、请求和错误归远程数据层 |
-| 表单草稿、校验和保存状态 | TanStack Form、相关 Store 订阅、自动保存会话 | 草稿与已提交状态分开 |
-| 持久配置 | WXT Storage 与 Zod adapter | 对外部数据校验，集中管理写入 |
-| 翻译缓存与术语数据 | Dexie/IndexedDB | 按查询、容量及持久性需求组织 |
+| 短期 UI 状态 | 拥有交互的组件 | 关闭或卸载后可重建 |
+| 已提交设置 | 扩展存储或负责它的服务 | atom 是内存视图，写成功后与持久值一致 |
+| 表单草稿 | 当前编辑会话 | 校验与提交后才改变已提交值 |
+| 远程数据 | 查询缓存 | 请求、失效和错误由查询层负责 |
+| DOM/媒体状态 | 所在页面对象 | 消息读取快照，UI 副本不能独立充当真值 |
 
-`writeConfigAtom` 先乐观更新，再通过当前上下文内的 Promise 队列重新读存储、合并并保存；数组更新采用覆盖语义。版本计数避免旧任务覆盖较新的本地视图。Storage watch 被用作重新读取的通知，另在页面重新可见时刷新。队列属于当前 JS 上下文，不能提供多个标签页或扩展页面之间的原子写入保证。
+**最小接入：** 选择一个设置字段，统一存储 adapter、读取初始化、写入 action 与订阅，再迁移消费它的组件。只在多个入口需要同一契约时提取共享工厂，保持存储可替换以便验证失败行为。
 
-依据：`src/utils/atoms/config.ts`、`src/utils/tanstack-query.ts`、`src/entrypoints/options/pages/custom-actions/action-config-form/form.ts`、`src/utils/db/dexie/app-db.ts`。
+持久化边界把外部值作为 `unknown` 校验。TypeScript 泛型不提供运行时校验；默认值补齐也不等于历史迁移。WXT 项目优先用 `storage.defineItem` 集中 key、fallback、watch 和需要时的版本配置；现有 adapter 已满足契约时保留。[WXT Storage 文档](https://wxt.dev/storage.html)
 
-### 接入建议
+异步规则：
 
-先为每类数据确定唯一权威来源、读者、写者、生命周期和恢复方式，再决定是否新增 Store。已有状态库可承担共享客户端状态；远程响应可以直接由已有查询层消费，避免再复制到全局 Store。
+- 初始化读取须在消费者保存前完成，或定义兼容读路径，防止默认值覆盖旧设置。
+- 同实例排队写入时，用最新持久值合并字段补丁；旧任务的成功或失败不能覆盖更新的乐观视图。失败回滚仅撤销该次尚未被后续修改取代的内容。
+- 订阅通知可触发重读；用请求代次或版本丢弃过期结果，卸载时取消订阅。自动保存另定义校验、输入法组合输入及离开页面时的 flush 行为。
+- popup、options、content、background 各有独立 JS 上下文。Jotai store、Promise 队列和 storage watch 均不提供跨上下文事务。出现竞争时，优先收敛为后台单一写入入口并按持久对象串行处理，或采用支持事务的存储；所有调用方都必须遵循同一协议。普通 storage 的“读版本再写”也不是原子比较交换。
 
-自动保存需定义校验失败、写入失败、输入法组合输入、路由切换和退出时的 flush 行为。乐观更新的回退必须与正在进行的新写入相容。多个上下文会竞争写入时，评估单一后台写入者、版本检查或存储事务，依据目标平台选一种明确机制。
+**验收：** 快速连续编辑、初次读取与写入交错、旧写失败、新写成功、卸载后通知，以及两个独立上下文同时改不同字段。单 store 测试只能证明该实例内行为。后台队列重启后如何恢复，继续按下文生命周期处理。
 
-**最小重构：** 选择一个存在丢更新或状态重复的字段，收敛写入入口和订阅路径。完成条件是快速连续编辑、失败回退、切页再返回和跨上下文更新都可解释，临时副本不再承担独立真值。
+## 组件与样式
+
+**推荐 Base UI 提供交互原语。** 在现有样式体系中定义背景、文本、边框、品牌、危险、焦点与间距等语义 Token，再封装业务确实重复的控件和变体。Base UI 本身不提供视觉皮肤，可配合 CSS Modules、普通 CSS 或 Tailwind；需要预制组件时再选用基于 Base UI 的 shadcn 组件，按项目实际生成配置核对底层实现。[Base UI 概览](https://base-ui.com/react/overview/about)
+
+**最小接入：** 替换一个重复或存在键盘缺陷的控件，保留业务 props，统一其加载、禁用、错误和焦点状态。引入组件库后仍验证可访问名称、键盘操作、焦点回归与屏幕阅读器语义。
+
+独立扩展页面在文档根应用主题；注入网页的 UI 在自己的容器中应用主题。Shadow DOM 场景显式选择组件 Portal 容器，使样式、层级和交互范围一致；Base UI Dialog 的 Portal 默认挂到 body，可通过 `container` 指定 HTMLElement 或 ShadowRoot。[Dialog Portal 文档](https://base-ui.com/react/components/dialog)
+
+Shadow DOM 仍需检查继承字体、CSS 变量、浮层定位、页面缩放与宿主快捷键。仅在确认冲突时增加变量前缀或单位转换，保留用户缩放与字体偏好的可用性。
+
+**验收：** popup 尺寸限制、亮暗主题、长文案、键盘开关与返回焦点；注入 UI 另在冲突页面、滚动和全屏场景验证浮层。
+
+## 国际化
+
+**推荐 WXT i18n 作为 WXT 扩展的基础。** 安装 `@wxt-dev/i18n`，在 WXT 配置的 `modules` 中合并加入 `@wxt-dev/i18n/module`，设置 `manifest.default_locale`，将资源放在配置的 `srcDir` 下的 `locales/`。通过 `#i18n` 的 `i18n.t` 使用类型化键，构建生成 `_locales`；manifest 用 `__MSG_key__` 引用文案。[WXT i18n 文档](https://wxt.dev/i18n.html)
+
+先区分两种语言契约：
+
+| 需求 | 推荐方式 |
+| --- | --- |
+| UI 跟随浏览器语言 | WXT i18n 与浏览器 locale 回退，减少各入口重复打包语言资源 |
+| 用户在扩展内独立切换语言 | 保留 WXT 生成 manifest 资源，增加 i18next 等运行时引擎和订阅，尽量复用同一资源源文件 |
+
+WXT i18n 基于浏览器 i18n，单独使用不提供扩展内任意语言切换。运行时方案需明确语言设置、支持列表、默认回退、异步资源就绪与失败行为，每个 JS 上下文独立初始化。UI 语言与内容处理目标语言分别存储。背景菜单等创建时固定的文案需在语言变化后重建。
+
+**最小接入：** 迁移一个页面和一组非 React 文案，检查全部支持语言的键、占位符与复数需求；统一资源格式或提供明确的生成转换。需要替换引擎时使用窄门面保留调用契约。Prompt 等模板的占位符应按消费阶段处理，翻译结果仍按文本或 HTML 输出边界转义。
+
+**验收：** 首屏、缺键回退、占位符、manifest 与 `_locales` 产物、长文案；有应用内切换时验证草稿、焦点和编辑器实例保留。整棵子树改 key 会重置内部状态，优先订阅更新。mock 掉 i18n 的测试不能证明真实语言行为。
+
+## 通信与生命周期
+
+消息少时沿用 `runtime.sendMessage`；请求较多且需类型契约时推荐 [`@webext-core/messaging`](https://webext-core.aklinker1.io/messaging/installation)，流式或持续会话按需要使用 Port。静态类型不能替代接收端校验。
+
+- 验证发送者身份、消息类型、目标对象与 payload 范围；优先使用浏览器提供的 tab/frame 身份。页面可控输入不能直接获得任意 URL 请求、脚本执行或存储能力。
+- 多 frame 对象使用包含 frame 身份的稳定路由。广播汇总可以容忍局部失败，但需区分“目标已消失”和“该 frame 暂时不可读”；后者不应悄悄改变用户选中对象。
+- 顺序敏感命令在第一次异步等待前入队，按真正共享资源选择队列粒度。单 tab 队列不保护跨 tab 共享设置。某项失败后保留错误结果并让后续任务继续；页面导航后旧任务通过会话标识失效或取消。
+- 监听器同步注册。异步回复按目标浏览器契约保持通道；使用回调模式时同步返回 `true`，并为可处理消息提供成功或错误响应。Promise listener 支持需核对目标浏览器版本。[Chrome 消息文档](https://developer.chrome.com/docs/extensions/develop/concepts/messaging)
+- MV3 worker 可终止，内存 Map、选中项和队列不能充当持久真值。为状态分别选择丢弃、重新发现、session/local 存储或事务恢复；重试有副作用的命令需定义幂等或去重。不要靠常驻计时器假定后台永存。[Worker 生命周期](https://developer.chrome.com/docs/extensions/develop/concepts/service-workers/lifecycle)
+- 内容脚本在失效或卸载时清理监听器、observer、计时器、storage watch 与 UI root。按需要处理 SPA 导航、重复注入和 frame 消失。
+
+权限围绕功能声明：用户手动触发时评估 `activeTab` 与按需注入；持续自动处理网页时评估相应 host permissions，支持时按需申请 optional permissions。修改权限须验证实际入口和拒绝路径，不能为缩短审核擅自削弱已约定功能。MAIN world 仅在确需页面上下文能力时使用，桥接输入按不可信处理。
+
+**验收：** 非法发送者与 payload、frame 失败、快速命令及失败后继续、导航后的旧任务、worker 冷启动与重启、重新注入和权限拒绝。产物层与浏览器层检查见 [工程质量](quality-and-evolution.md#工程质量)。

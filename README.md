@@ -191,12 +191,12 @@ npx skills add https://github.com/Yukiniro/skills --skill leafer-js
 
 ### Browser Extension Best Practices
 
-Help another project learn and apply browser extension best practices. For a concrete problem, choose keep, adopt, locally refactor, or defer. Borrow the design, and keep the target project's tools, layout, and implementation.
+Diagnose and improve browser extensions with concrete library recommendations, runtime boundaries, and a complete release workflow.
 
-- Routes by problem to architecture, quality and evolution, or documentation
-- Decision record covers evidence, boundary, smallest change, acceptance, and rollback
-- Analysis stops at the decision. Implementation starts only after the user names the option
-- Existing equivalent capabilities stay. Source dependency versions are not an upgrade requirement
+- Recommends Jotai, Base UI, WXT i18n, and Changesets when the corresponding capability is needed
+- Covers shared settings, cross-context messaging, MV3 recovery, and user-data upgrades
+- Connects changesets, version PRs, artifact checks, GitHub Releases, and store submission
+- Preserves effective existing tools and separates source tests, build checks, and real-browser evidence
 
 [Documentation →](skills/browser-extension-best-practices/SKILL.md)
 
@@ -237,7 +237,7 @@ In Cursor, Claude Code, or any AI coding assistant that supports Agent Skills:
 | Deep Code Analysis | "Analyze this module" / "帮我理解这个业务逻辑"              |
 | Any to Course      | "把这篇文章做成课件" / "Turn this URL into slides"          |
 | LeaferJS           | "Build a canvas editor with LeaferJS" / "用 Leafer 做无限画布" |
-| Browser Extension Best Practices | "用浏览器插件最佳实践评估要不要接入" / "Apply browser extension best practices" |
+| Browser Extension Best Practices | "优化浏览器插件的状态与发布流程" / "Optimize browser extension state and releases" |
 
 ## Creating Custom Skills
 

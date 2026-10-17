@@ -191,12 +191,12 @@ npx skills add https://github.com/Yukiniro/skills --skill leafer-js
 
 ### Browser Extension Best Practices（浏览器插件最佳实践）
 
-帮助其他项目学习并选用浏览器插件项目的最佳实践。面对具体问题时，在保留现状、接入能力、局部重构、暂缓之间选择；借鉴设计，保留目标项目自己的工具、目录和实现。
+诊断并优化浏览器插件，提供明确的库级推荐、运行边界和完整发布流程。
 
-- 按问题路由到架构与界面、质量与演进、文档
-- 决策记录包括证据、边界、最小改动、验收和回退
-- 只要求分析时停在决策；用户点名某一档后才改目标项目
-- 已有等价能力就保留。来源依赖版本不是升级要求
+- 按能力需求推荐 Jotai、Base UI、WXT i18n 和 Changesets
+- 覆盖共享设置、跨上下文通信、MV3 恢复与用户数据升级
+- 串起 changeset、版本 PR、产物检查、GitHub Release 和商店提交
+- 保留有效的现有工具，区分源码测试、产物检查和真实浏览器证据
 
 [查看文档 →](skills/browser-extension-best-practices/SKILL.md)
 
@@ -237,7 +237,7 @@ npx skills add https://github.com/Yukiniro/skills --skill frontend-resume
 | Deep Code Analysis | "分析这个模块" 或 "帮我理解这个业务逻辑"               |
 | Any to Course      | "把这篇文章做成课件" 或 "Turn this URL into slides"     |
 | LeaferJS           | "用 Leafer 做无限画布" 或 "Build a canvas editor with LeaferJS" |
-| Browser Extension Best Practices | "用浏览器插件最佳实践评估要不要接入" 或 "Apply browser extension best practices" |
+| Browser Extension Best Practices | "优化浏览器插件的状态与发布流程" 或 "Optimize browser extension state and releases" |
 
 ## 创建自定义 Skill
 
